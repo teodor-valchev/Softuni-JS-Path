@@ -10,7 +10,11 @@ viewEngine(app);
 app.use(express.static('src/public'))
 
 app.get('/', (req, res) => {
-    res.render('home', {layout: false})
+    res.render('home')
+})
+
+app.get('/cats/add-cat', (req, res) => {
+    res.render('addCat')
 })
 
 
