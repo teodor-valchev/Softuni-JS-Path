@@ -4,18 +4,12 @@ const app = express();
 
 const viewEngine = require('./config/viewEngine');
 const config = require('./config/config');
+const router = require('./routes');
 
 viewEngine(app);
 
 app.use(express.static('src/public'))
-
-app.get('/', (req, res) => {
-    res.render('home')
-})
-
-app.get('/cats/add-cat', (req, res) => {
-    res.render('addCat')
-})
+app.use(router);
 
 
 app.listen(3000, () => {
