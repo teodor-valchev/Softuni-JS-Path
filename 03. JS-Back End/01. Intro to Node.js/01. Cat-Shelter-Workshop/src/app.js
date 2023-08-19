@@ -1,12 +1,16 @@
 const express = require('express');
-const hbs = require('express-handlebars');
 
 const app = express();
 
+const viewEngine = require('./config/viewEngine');
 const config = require('./config/config');
 
+viewEngine(app);
+
+app.use(express.static('src/public'))
+
 app.get('/', (req, res) => {
-    res.send('hELOOOOOO')
+    res.render('home', {layout: false})
 })
 
 
