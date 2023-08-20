@@ -1,12 +1,16 @@
 const Cat = require('../models/Cat');
-const catsDb = require('../data/db.json')  
+const save = require('../models/Breed');
+
+const catsDb = require('../data/db.json');
+const breedsDb = require('../data/breedDb.json')
 
 function getHome (req , res) {
-    res.render('home',{cats: catsDb.cats})
+    res.render('home',{cats: catsDb.cats});
 }
 
 function getAddCat(req,res) {
-    res.render('addCat')
+    res.render('addCat', {breeds: breedsDb});
+    console.log(breedsDb);
 }
 
 function postAddCat(req,res) {
@@ -18,11 +22,14 @@ function postAddCat(req,res) {
 }
 
 function getAddBreed(req,res) {
-    res.render('addBreed')
+    res.render('addBreed');
 }
 
 function postAddBreed(req,res) {
-    console.log(req.body);
+    const breed = req.body.breed
+    save(breed)
+    
+    res.redirect('/')
 }
 
 module.exports = {
