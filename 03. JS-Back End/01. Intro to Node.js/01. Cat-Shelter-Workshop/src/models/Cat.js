@@ -11,6 +11,7 @@ class Cat {
     }
 
     static save(cat) {
+        cat.id = Number([db.cats.length]) + 1; 
         db.cats.push(cat);
         const data = JSON.stringify(db, null, 2);      
         fs.writeFileSync(path.resolve(__dirname, '../data/db.json'), data);
