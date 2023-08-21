@@ -8,5 +8,7 @@ module.exports = (app) => {
 
     app.get('/create', cubicController.getCreateCube);
 
-    app.post('/create', cubicController.postCreateCube)
+    app.post('/create', cubicController.postCreateCube);
+
+    app.get('/details/:cubeId', cubicController.getDetailsPage)
 };

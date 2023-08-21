@@ -21,9 +21,22 @@ function postCreateCube(req, res) {
     res.redirect('/');
 }
 
+function getDetailsPage(req, res) {
+    const cubeId = Number(req.params.cubeId);
+    const currentCube = db.cubes.find(c => c.id === cubeId);
+
+    if (!currentCube) {
+        res.render('404');
+        return;
+    }
+
+    res.render('details', { currentCube });
+}
+
 module.exports = {
     getHomePage,
     getAboutPage,
     getCreateCube,
-    postCreateCube
+    postCreateCube,
+    getDetailsPage
 }
