@@ -10,7 +10,6 @@ module.exports = (app) => {
 
     //TODO: Setup the body parser
     app.use(bodyParser.urlencoded({ extended: true }))
-    app.use(bodyParser.json())
 
     //TODO: Setup the static files
     app.use(express.static('static'))
