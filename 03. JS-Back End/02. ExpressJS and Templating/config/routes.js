@@ -1,5 +1,8 @@
 // TODO: Require Controllers...
+const cubicController = require('../controllers/cubeController');
 
 module.exports = (app) => {
-    // TODO...
+    app.get('/', cubicController.getHomePage);
+
+    app.get('/about', cubicController.getAboutPage)
 };
