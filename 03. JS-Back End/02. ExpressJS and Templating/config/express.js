@@ -13,5 +13,4 @@ module.exports = (app) => {
 
     //TODO: Setup the static files
     app.use(express.static('static'))
-
 };

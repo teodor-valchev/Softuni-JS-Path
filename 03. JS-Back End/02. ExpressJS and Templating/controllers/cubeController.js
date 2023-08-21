@@ -2,7 +2,23 @@ const Cube = require('../models/Cube');
 const db = require('../config/database.json');
 
 function getHomePage(req, res) {
-    res.render('index', {cubes: db.cubes});
+    const {search, from: difficultyFrom, to: difficultyTo } = req.query;
+
+    let cubes = db.cubes;
+
+    if (search) {
+        cubes = cubes.filter(c => c.name.toLowerCase().includes(search.toLowerCase()));
+    }
+
+    if (difficultyFrom) {
+        cubes = cubes.filter(c => c.difficultyLevel >= difficultyFrom);
+    }
+
+    if (difficultyTo) {
+        cubes = cubes.filter(c => c.difficultyLevel <= difficultyTo);
+    }
+
+    res.render('index', { cubes, search, difficultyFrom , difficultyTo });
 }
 
 function getAboutPage(req, res) {
