@@ -14,4 +14,6 @@ module.exports = (app) => {
     app.get('/details/:cubeId', cubicController.getDetailsPage);
 
     app.get('/create/accessory', accessoryController.getAccessoryPage);
+
+    app.post('/create/accessory', accessoryController.createAccessory);
 };
