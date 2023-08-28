@@ -54,5 +54,5 @@ module.exports = {
     getAboutPage,
     getCreateCube,
     postCreateCube,
-    getDetailsPage
+    getDetailsPage,
 }
