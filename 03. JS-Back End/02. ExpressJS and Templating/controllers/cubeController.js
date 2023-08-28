@@ -1,10 +1,10 @@
-const Cube = require('../models/Cube');
-const db = require('../config/database.json');
 
-function getHomePage(req, res) {
+const Cube = require('../models/Cube');
+
+async function getHomePage(req, res) {
     const {search, from: difficultyFrom, to: difficultyTo } = req.query;
 
-    let cubes = db.cubes;
+    let cubes = await Cube.find().lean();
 
     if (search) {
         cubes = cubes.filter(c => c.name.toLowerCase().includes(search.toLowerCase()));
@@ -29,17 +29,17 @@ function getCreateCube(req, res) {
     res.render('create');
 }
 
-function postCreateCube(req, res) {
+async function postCreateCube(req, res) {
     const {name, description, imageUrl, difficultyLevel} = req.body;
-    const cube = new Cube(name, description, imageUrl ,difficultyLevel);
-    Cube.save(cube);
+    const cube = new Cube({name, description, imageUrl , difficultyLevel});
+    await cube.save();
 
     res.redirect('/');
 }
 
-function getDetailsPage(req, res) {
-    const cubeId = Number(req.params.cubeId);
-    const currentCube = db.cubes.find(c => c.id === cubeId);
+async function getDetailsPage(req, res) {
+    const cubeId = req.params.cubeId;
+    const currentCube = await Cube.findById(cubeId);
 
     if (!currentCube) {
         res.render('404');
