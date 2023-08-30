@@ -17,5 +17,7 @@ module.exports = (app) => {
 
     app.get('/create/accessory/:cubeId', accessoryController.getAttachAccessoryPage);
 
+    app.post('/create/accessory/:cubeId', accessoryController.postAttachAccessoryPage);
+
     app.post('/create/accessory', accessoryController.createAccessory);
 };

@@ -15,7 +15,7 @@ async function createAccessory(req, res){
 async function getAttachAccessoryPage(req,res) {
     const cubeId = req.params.cubeId;
     const currentCube = await Cube.findById(cubeId);
-    const accessories = await Accessory.find();
+    const accessories = await Accessory.find().lean();
 
     if (!currentCube) {
         res.render('404')
@@ -24,8 +24,19 @@ async function getAttachAccessoryPage(req,res) {
     res.render('attachAccessory', { currentCube, accessories })
 }
 
+async function postAttachAccessoryPage(req, res) {
+    const cube = await Cube.findById(req.params.cubeId);
+    const accessoryID = req.body.accessory;
+
+    cube.accessories.push(accessoryID);
+    cube.save();
+
+    res.redirect(`/details/${cube._id}`)
+}
+
 module.exports = {
     getAccessoryPage,
     createAccessory,
-    getAttachAccessoryPage
+    getAttachAccessoryPage,
+    postAttachAccessoryPage
 }

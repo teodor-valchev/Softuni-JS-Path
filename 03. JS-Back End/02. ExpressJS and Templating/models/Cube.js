@@ -20,8 +20,12 @@ const cubeSchema = mongoose.Schema({
         required: true,
         min: 1,
         max: 6
-    }
-    //Accesory reference
+    },
+    accessories: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Accessory'
+    }]
+    
 });
 
 const Cube = mongoose.model('Cube', cubeSchema );
