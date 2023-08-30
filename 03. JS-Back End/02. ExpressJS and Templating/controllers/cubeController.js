@@ -38,8 +38,7 @@ async function postCreateCube(req, res) {
 }
 
 async function getDetailsPage(req, res) {
-    const cubeId = req.params.cubeId;
-    const cube = await Cube.findById(cubeId);
+    const cube = await Cube.findById(req.params.cubeId).populate('accessories').lean();
 
     if (!cube) {
         res.render('404');
