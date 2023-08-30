@@ -1,11 +1,16 @@
 
-<main>
-  <h1>{{currentCube.name}}</h1>
-  <img class="cube" src="{{currentCube.imageUrl}}">
-    <div class="details">
-      <p><span>Description:</span>{{currentCube.description}}</p>
-      <p><span>Difficulty level:</span>{{currentCube.difficultyLevel}}</p>
-      <a class="btn" href="/">Back</a>
-      <a class="btn" href="/create/accessory/{{currentCube._id}}">Attach</a>
-    </div>
-</main>
+  <main>
+      <h1>{{cube.name}}</h1>
+      <img class="cube" src="{{cube.imageUrl}}">
+      <div class="details">
+          <p><span>Description:</span>{{cube.description}}</p>
+          <p><span>Difficulty level:</span>{{cube.difficultyLevel}}</p>
+          <a class="btn" href="/">Back</a>
+          <a class="btn" href="/create/accessory/{{cube._id}}">Attach</a>
+      </div>
+      <h2>Accessories</h2>
+      <div class="accessories">
+      {{#each cube.accessories}}
+          {{> accessory}}
+      {{/each}}
+  </main>

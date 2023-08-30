@@ -39,14 +39,14 @@ async function postCreateCube(req, res) {
 
 async function getDetailsPage(req, res) {
     const cubeId = req.params.cubeId;
-    const currentCube = await Cube.findById(cubeId);
+    const cube = await Cube.findById(cubeId);
 
-    if (!currentCube) {
+    if (!cube) {
         res.render('404');
         return;
     }
 
-    res.render('details', { currentCube });
+    res.render('details', { cube });
 }
 
 module.exports = {
