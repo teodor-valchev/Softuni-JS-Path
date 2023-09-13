@@ -1,0 +1,29 @@
+{
+    "cats": [
+        {
+            "name": "Pesho",
+            "imageUrl": "",
+            "breed": "seslska",
+            "description": "super kotka"
+        },
+        {
+            "name": "Ivan",
+            "imageUrl": "",
+            "breed": "seslska",
+            "description": "super kotka"
+        }
+        ,
+        {
+            "name": "Gosho",
+            "imageUrl": "",
+            "breed": "seslska",
+            "description": "super kotka"
+        },
+        {
+            "name": "Domino",
+            "imageUrl": "",
+            "breed": "seslska",
+            "description": "super kotka"
+        }
+    ]
+}
