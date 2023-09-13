@@ -1,0 +1,18 @@
+{
+  "cats": [
+    {
+      "name": "asd",
+      "description": "asdsa",
+      "upload": "",
+      "breed": "asdas",
+      "id": 1
+    },
+    {
+      "name": "",
+      "description": "",
+      "upload": "",
+      "breed": "asdas",
+      "id": 2
+    }
+  ]
+}
