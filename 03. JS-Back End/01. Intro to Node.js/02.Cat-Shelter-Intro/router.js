@@ -11,7 +11,7 @@ function router (url, res) {
     if (url === '/') {
         const parsedCats = JSON.parse(catsDb);
         parsedCats.cats.forEach(cat => {
-            res.write(homeTemplate.replaceA('name',cat.name));
+            res.write(homeTemplate.replace('name',cat.name));
             
         });
         console.log(homeTemplate);
