@@ -1,0 +1,17 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: #cccccc;
+}
+
+h1 {
+    font-size: 28px;
+}
+
+section {
+    margin-left: 20px;
+}
+
+p {
+    font-size: 24px;
+}
