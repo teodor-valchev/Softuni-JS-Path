@@ -1,0 +1,19 @@
+.button {
+    border: 2px solid;
+    padding: 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    outline: none;
+    color: rgb(251, 251, 251);
+    background-color: rgb(51, 51, 51);
+}
+
+
+
+a {
+    text-decoration: none;
+}
+
+.hover:hover {
+    background-color: green;
+}
