@@ -1,0 +1,17 @@
+main {
+    width: 900px;
+    height: 140px;
+}
+img {
+    float: left;
+    border-right: 1px solid #d1d1d1;
+    margin-right: 19px;
+    padding-right: 19px;
+}
+p {
+    line-height: 1.5;
+    width: 419px;
+    float: right;
+    font-size: 20px;
+    text-align: justify;
+}

@@ -1,0 +1,30 @@
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 30px;
+}
+nav {
+    border-bottom: 2px solid;
+}
+
+ul {
+    list-style: none;
+    display: inline-block;
+    margin-left: 13rem;
+}
+
+li {
+    display: inline-block;
+    margin: 15px;
+    color: green;
+}
+
+header h1 {
+    position: absolute;
+}
+main h1 {
+    margin-top: 2rem;
+}
+
+p {
+    line-height: 1.4;
+}

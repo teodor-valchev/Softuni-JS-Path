@@ -1,0 +1,17 @@
+div {
+    width: 280px;
+    display: inline-block;
+    background-color: #0a2c48;
+    border-radius: 4px;
+    color: #fff;
+    padding: 16px;
+}
+
+p {
+    color: #c9d6ff;
+    font-size: 18px;
+}
+
+div:hover {
+    background-color: #2a4c68;
+}
