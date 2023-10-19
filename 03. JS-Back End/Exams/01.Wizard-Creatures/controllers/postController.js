@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const postService = require("../services/postService");
+const {extractErrorMsgs} = require("../utils/errorHandler");
 
 router.get("/all", async (req, res) => {
     const creatures = await postService.getAllPosts();
@@ -21,9 +22,13 @@ router.post("/create", async (req, res) => {
         description,
         owner: req.user,
     };
-    await postService.createNewPost(createCreature);
-
-    res.redirect("/posts/all");
+    try {
+        await postService.createNewPost(createCreature);
+        res.redirect("/posts/all");
+    } catch (error) {
+        const errorMassages = extractErrorMsgs(error);
+        res.status(404).render("create", { errorMassages });
+    }
 });
 
 router.get("/:creatureId/details", async (req, res) => {
@@ -34,7 +39,7 @@ router.get("/:creatureId/details", async (req, res) => {
 
     const isOwner = user?._id === owner.toString();
 
-    console.log(isOwner)
+    console.log(isOwner);
     res.render("details", { creature, isOwner });
 });
 
@@ -64,6 +69,21 @@ router.get("/:creatureId/delete", async (req, res) => {
     const { creatureId } = req.params;
     await postService.deleteCreature(creatureId);
     res.redirect("/posts/all");
+});
+
+router.get("/profile", async (req, res) => {
+    const { user } = req;
+    const myPosts = await postService.getMyPosts(user._id);
+
+    res.render("my-posts", { myPosts });
+});
+
+router.get("/:creatureId/vote", async (req, res) => {
+    const { creatureId } = req.params;
+    const { _id } = req.user;
+    console.log(_id);
+    await postService.deleteCreature(creatureId);
+    res.redirect(`/posts/${creatureId}/details`);
 });
 
 module.exports = router;

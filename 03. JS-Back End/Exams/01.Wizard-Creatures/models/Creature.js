@@ -1,12 +1,16 @@
 const mongoose = require("mongoose");
 
 const CreatureSchema = new mongoose.Schema({
-    name: { type: String },
-    species: { type: String },
-    skin: { type: String },
-    eye: { type: String },
-    image: { type: String },
-    description: { type: String },
+    name: {
+        type: String,
+        required: true,
+        minLength: 3
+    },
+    species: { type: String, required: true },
+    skin: { type: String, required: true },
+    eye: { type: String, required: true },
+    image: { type: String, required: true },
+    description: { type: String, required: true },
     votes: [
         {
             type: mongoose.Types.ObjectId,

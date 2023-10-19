@@ -13,3 +13,6 @@ exports.getSinglePostAndUpdate = async (creatureId, creatureData) =>
 
 exports.deleteCreature = async (creatureId) =>
     await Creature.findByIdAndDelete(creatureId);
+
+    exports.getMyPosts = async (id) =>
+        await Creature.find({owner: id}).populate('owner').lean();
