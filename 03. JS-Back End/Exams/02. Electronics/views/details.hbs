@@ -1,0 +1,37 @@
+
+
+        <section id="detailsPage">
+            <div id="detailsInfo">
+                <h1>Name: {{electronic.name}}</h1>
+                <div class="info"><img src="{{electronic.image}}"></div>
+
+                <div class="info">
+                    <h3>Type: {{electronic.type}}</h3>
+                    <h3>Year of Production: {{electronic.production}}</h3>
+                    <h3>Years of Exploitation: {{electronic.exploitation}}</h3>
+                    <h3>Damages: {{electronic.damages}}</h3>
+                    <h3>Description: {{electronic.description}}</h3>
+                    <h2>Price: ${{electronic.price}}</h2>
+                </div>
+
+                <!--If there is user logged in-->
+                {{#if isUserAuthenticated}}
+                <div class="buttons">
+                    
+                    <!--If user is not owner of the toy post-->
+                    {{#unless isOwnerOfItem }}
+                    <a href="#" class="buy-btn">Buy</a>
+                    {{/unless}}
+
+                    <!--If user is owner-->
+                    {{#if isOwnerOfItem}}
+                    <a href="/offers/edit/{{electronic._id}}" class="edit-btn">Edit</a>
+                    <a href="/offers/delete/{{electronic._id}}" class="delete-btn">Delete</a>
+                    {{/if}}
+
+                    <!--If user is not the owner and is bought this toy-->
+                    <p><span class="buy">Thank You For Your Purchase</span></p>
+                </div>
+                {{/if}}
+            </div>
+        </section>
