@@ -29,6 +29,6 @@ app.use(router);
 async function dbConnect() {
     await mongoose.connect(DB_URI_STRING);
 }
-dbConnect().then(() => console.log("Sucessfully Connected to DB!"));
+dbConnect().then(() => console.log("Successfully Connected to DB!"));
 
 app.listen(PORT, () => console.log(`Server is listening on port ${PORT}...`));
