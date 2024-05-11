@@ -82,35 +82,27 @@ module.exports = async (req, res) => {
         });
     } else if (pathname === "/cats/add-cat" && req.method === "POST") {
         var form = new formidable.IncomingForm();
+        const catPath = path.join(__dirname, '../data/cats.json')
         //TODO: fileUplaod doesn't work as expected
 
-        form.parse(req, function (err, fields, files) {
+        form.parse(req, function (err, fields, files = true) {
             if (err) {
                 return err;
             }
-
-            let oldPath = files.upload[0].filepath; 
-            let newPath = path.normalize(
-                path.join(__dirname, "../content/images/" + files.upload[0].newFilename)
-            ); 
-            fs.rename(oldPath, newPath, (err) => {
-                if (err) throw err;
-                console.log("Files was uploaded sccessfully!");
-            });
-
-            fs.readFile('../data/cats.json',"utf-8", (err, data) => {
+            
+            fs.readFile(catPath, (err, data) => {
                 if (err) {
                     return err;
                 }
-                const allCats = JSON.parse(data)
-                allCats.push({ id: cats.length = 1, ...fields, image: files.upload[0].filepath })
-                const json = JSON.stringify(allCats)
+                const allCats = JSON.parse(data);
+                allCats.push({ id: (cats.length), ...fields });
+                const json = JSON.stringify(allCats);
 
-                fs.writeFile('../data/cats.json', json, () => {
+                fs.writeFile(catPath, json, () => {
                     res.writeHead(301, {
                         Location: `/`,
                     }).end();
-                })
-            })
+                });
+            });
         })}
 };
