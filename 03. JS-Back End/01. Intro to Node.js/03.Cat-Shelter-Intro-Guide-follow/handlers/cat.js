@@ -84,7 +84,6 @@ module.exports = async (req, res) => {
     } else if (pathname === "/cats/add-cat" && req.method === "POST") {
         var form = new formidable.IncomingForm();
         const catPath = path.join(__dirname, "../data/cats.json");
-        //TODO: fileUplaod doesn't work as expected
 
         form.parse(req, function (err, fields, files = true) {
             if (err) {
@@ -116,12 +115,13 @@ module.exports = async (req, res) => {
                 return;
             }
 
-            let modifiedData = data.replace("{{}}", cat.name);
-            modifiedData = data.replace("{{catId}}", cat.id);
+            let modifiedData = data;
+            modifiedData = modifiedData.replace("{{catId}}", cat.id);
             modifiedData = modifiedData.replace(
                 "{{description}}",
                 cat.description
             );
+            modifiedData = modifiedData.replace("{{name}}", cat.name);
             modifiedData = modifiedData.replace(
                 "{{catBreed}}",
                 breeds.map(

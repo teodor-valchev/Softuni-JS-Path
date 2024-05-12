@@ -3,7 +3,6 @@ const handlers = require('./handlers')
 const PORT = 3000;
 
 const server = http.createServer((req, res) => {
-    
     for (const handler of handlers) {
         if (!handler(req,res)) {
             break
