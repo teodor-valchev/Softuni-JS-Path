@@ -2,12 +2,13 @@ const url = require("url");
 const fs = require("fs");
 const path = require("path");
 const qs = require("querystring");
-const formidable = require('formidable')
+const formidable = require("formidable");
 const breeds = require("../data/breeds");
 const cats = require("../data/cats");
 
 module.exports = async (req, res) => {
     const pathname = url.parse(req.url).pathname;
+    const catId = Number(pathname.charAt(pathname.length - 1));
 
     if (pathname === "/cats/add-cat" && req.method === "GET") {
         const filepath = path.join(__dirname, "../views/addCat.html");
@@ -82,20 +83,20 @@ module.exports = async (req, res) => {
         });
     } else if (pathname === "/cats/add-cat" && req.method === "POST") {
         var form = new formidable.IncomingForm();
-        const catPath = path.join(__dirname, '../data/cats.json')
+        const catPath = path.join(__dirname, "../data/cats.json");
         //TODO: fileUplaod doesn't work as expected
 
         form.parse(req, function (err, fields, files = true) {
             if (err) {
                 return err;
             }
-            
+
             fs.readFile(catPath, (err, data) => {
                 if (err) {
                     return err;
                 }
                 const allCats = JSON.parse(data);
-                allCats.push({ id: (cats.length), ...fields });
+                allCats.push({ id: cats.length + 1, ...fields });
                 const json = JSON.stringify(allCats);
 
                 fs.writeFile(catPath, json, () => {
@@ -104,5 +105,92 @@ module.exports = async (req, res) => {
                     }).end();
                 });
             });
-        })}
-};
+        });
+    } else if (pathname === `/cats/edit/${catId}` && req.method === "GET") {
+        const filepath = path.join(__dirname, "../views/editCat.html");
+        const cat = cats.find((x) => x.id === catId);
+
+        fs.readFile(filepath, "utf8", (err, data) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+
+            let modifiedData = data.replace("{{}}", cat.name);
+            modifiedData = data.replace("{{catId}}", cat.id);
+            modifiedData = modifiedData.replace(
+                "{{description}}",
+                cat.description
+            );
+            modifiedData = modifiedData.replace(
+                "{{catBreed}}",
+                breeds.map(
+                    (breed) => `<option value=${breed}>${breed}</option>`
+                )
+            );
+
+            res.writeHead(200, {
+                "Content-Type": "text/html",
+            });
+            res.write(modifiedData);
+            res.end();
+        });
+    } else if (pathname === `/cats/edit/${catId}` && req.method === "POST") {
+        const filepath = path.join(__dirname, "../data/cats.json");
+
+        const form = new formidable.IncomingForm();
+
+        form.parse(req, function (err, fields, files = true) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+
+            fs.readFile(filepath, (err, data) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                let cats = JSON.parse(data);
+                cats = cats.map((cat) => {
+                    if (cat.id === catId) {
+                        return {
+                            id: catId,
+                            ...fields,
+                        };
+                    }
+                    return cat;
+                });
+                const json = JSON.stringify(cats);
+
+                fs.writeFile(filepath, json, () => {
+                    res.writeHead(302, { Location: "/" });
+                    res.end();
+                });
+            });
+        });
+    } else if (pathname === `/cats/delete/${catId}` && req.method === "GET") {
+        const filepath = path.join(__dirname, "../data/cats.json");
+        
+        fs.readFile(filepath, 'utf8', (err, data) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+
+            let cats = JSON.parse(data)
+            if (cats.length === catId) {
+                cats.pop()
+            } else {
+                cats = cats.splice(catId, 1)
+            }
+
+            const json = JSON.stringify(cats)
+
+            fs.writeFile(filepath, json, () => {
+                res.writeHead(302, { Location: "/" });
+                res.end();
+            })
+        });
+    }
+}
