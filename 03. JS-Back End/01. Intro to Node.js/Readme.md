@@ -39,7 +39,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd 03.JS-Back End/01.Intro to Node.js/03.Cat-Shelter-Intro-Guide-follow
+  cd 03.JS-Back End/01.Intro to Node.js/02.Cat-Shelter-Intro-Guide-follow
 ```
 
 Install dependencies
