@@ -1,0 +1,18 @@
+{
+    "name": "Cubicle",
+    "description": "Cubicle workshop",
+    "authors": "Teo",
+    "version": "1.0.0",
+    "main": "src/app.js",
+    "scripts": {
+        "start": "nodemon src/app.js"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "express-handlebars": "^3.1.0",
+        "uniqid": "^5.0.3"
+    },
+    "devDependencies": {
+        "nodemon": "^1.19.2"
+    }
+}
