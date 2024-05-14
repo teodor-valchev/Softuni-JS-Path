@@ -13,4 +13,4 @@ function hbsConfig(app) {
     app.set("views", path.resolve(__dirname, "../views"));
 }
 
-module.exports = hbsConfig
+module.exports = hbsConfig;
