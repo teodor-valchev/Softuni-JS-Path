@@ -17,7 +17,24 @@ const cubes = [
     },
 ];
 
-exports.getAll = () => cubes.slice();
+exports.getAll = (search, from, to) => {
+    let newCubes = cubes.slice()
+    if (search) {
+        newCubes = cubes.filter((cube) => cube.name.toLowerCase().includes(search.toLowerCase()));
+    }
+
+    if (from) {
+        newCubes = newCubes.filter(cube => cube.difficultyLevel >= Number(from))
+    }
+
+    if (to) {
+        newCubes = newCubes.filter(cube => cube.difficultyLevel <= Number(to))
+    }
+
+    return newCubes;
+};
+
+exports.getCube = (cubeId) => cubes.find(x => x.id == cubeId) 
 
 exports.createCube = (cubeData) => {
     cubes.push({ id: cubes.length + 1, ...cubeData });

@@ -2,8 +2,10 @@ const router = require("express").Router();
 const { getAll } = require("../service/cubeService");
 
 router.get("/", (req, res) => {
-    const cubes = getAll();
-    res.render("home", { cubes });
+    const { search, from, to } = req.query;
+    const cubes = getAll(search, from, to);
+
+    res.render("home", { cubes, search, from, to });
 });
 
 router.get("/about", (req, res) => {

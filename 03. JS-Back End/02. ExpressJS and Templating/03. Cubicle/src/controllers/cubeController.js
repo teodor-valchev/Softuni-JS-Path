@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { createCube } = require("../service/cubeService");
+const { createCube, getCube } = require("../service/cubeService");
 
 router.get("/create", (req, res) => {
     res.render("create");
@@ -16,6 +16,13 @@ router.post("/create", (req, res) => {
     createCube(cubeData);
 
     res.redirect("/");
+});
+
+router.get("/details/:cubeId", (req, res) => {
+    const cubeId = req.params.cubeId;
+    const cube = getCube(cubeId);
+
+    res.render("details", { cube });
 });
 
 module.exports = router;
