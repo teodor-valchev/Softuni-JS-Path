@@ -18,20 +18,20 @@ const cubes = [
 ];
 
 exports.getAll = (search, from, to) => {
-    let newCubes = cubes.slice()
+    let result = cubes.slice()
     if (search) {
-        newCubes = cubes.filter((cube) => cube.name.toLowerCase().includes(search.toLowerCase()));
+        result = cubes.filter((cube) => cube.name.toLowerCase().includes(search.toLowerCase()));
     }
 
     if (from) {
-        newCubes = newCubes.filter(cube => cube.difficultyLevel >= Number(from))
+        result = result.filter(cube => cube.difficultyLevel >= Number(from))
     }
 
     if (to) {
-        newCubes = newCubes.filter(cube => cube.difficultyLevel <= Number(to))
+        result = result.filter(cube => cube.difficultyLevel <= Number(to))
     }
 
-    return newCubes;
+    return result;
 };
 
 exports.getCube = (cubeId) => cubes.find(x => x.id == cubeId) 
