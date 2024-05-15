@@ -8,3 +8,7 @@ exports.createAccessory = (accessoryData) => {
 exports.getAllAccessories = () => {
     return Accessory.find();
 }; 
+
+exports.getOthers = (accessoryIds) => {
+    return Accessory.find({_id: {$nin:accessoryIds}});
+}; 

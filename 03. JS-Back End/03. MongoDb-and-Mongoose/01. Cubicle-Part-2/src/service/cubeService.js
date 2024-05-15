@@ -21,7 +21,7 @@ exports.getAll = (search, from, to) => {
     return result;
 };
 
-exports.getCube = (cubeId) => Cube.findById(cubeId);
+exports.getCube = (cubeId) => Cube.findById(cubeId).populate("accessories");
 
 exports.createCube = (cubeData) => {
     const cube = new Cube(cubeData);
