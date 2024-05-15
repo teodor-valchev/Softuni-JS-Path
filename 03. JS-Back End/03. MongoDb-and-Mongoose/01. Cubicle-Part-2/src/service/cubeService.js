@@ -5,7 +5,9 @@ exports.getAll = (search, from, to) => {
 
     //TODO: FIX THE SEARCH
     if (search) {
-        result = cubes.filter((cube) => cube.name.toLowerCase().includes(search.toLowerCase()));
+        result = cubes.filter((cube) =>
+            cube.name.toLowerCase().includes(search.toLowerCase())
+        );
     }
 
     if (from) {
@@ -19,9 +21,15 @@ exports.getAll = (search, from, to) => {
     return result;
 };
 
-exports.getCube = (cubeId) => Cube.findOne({ _id: cubeId });
+exports.getCube = (cubeId) => Cube.findById(cubeId);
 
 exports.createCube = (cubeData) => {
     const cube = new Cube(cubeData);
+    return cube.save();
+};
+
+exports.attachAccessory = async (cubeId, accessoryId) => {
+    const cube = await Cube.findById(cubeId);
+    cube.accessories.push(accessoryId);
     return cube.save();
 };
