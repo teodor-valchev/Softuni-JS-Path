@@ -8,6 +8,7 @@
         "start": "nodemon src/app.js"
     },
     "dependencies": {
+        "bcrypt": "^5.1.1",
         "express": "^4.19.2",
         "express-handlebars": "^7.1.2",
         "mongoose": "^8.3.5"
