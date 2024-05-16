@@ -1,27 +1,40 @@
-const { register } = require('../service/authService')
+const { register, login } = require("../service/authService");
 
-const router = require('express').Router()
+const router = require("express").Router();
 
-router.get('/login', (req, res) => {
-    res.render('user/login')
-})
+router.get("/login", (req, res) => {
+    res.render("user/login");
+});
 
-router.get('/register', (req, res) => {
-    res.render('user/register')
-})
+router.post("/login", async (req, res) => {
+    const { username, password } = req.body;
 
-router.post('/register',async (req, res) => {
+    const token = await login(username, password);
+    res.cookie("auth", token);
+
+    res.redirect("/");
+});
+
+router.get("/register", (req, res) => {
+    res.render("user/register");
+});
+
+router.post("/register", async (req, res) => {
     const { username, password, repeatPassword } = req.body;
     const userData = {
         username,
         password,
-        repeatPassword
-    }
+        repeatPassword,
+    };
 
-    await register(userData)
+    await register(userData);
 
+    res.redirect("/users/login");
+});
 
-    res.redirect('/')
-})
+router.get("/logout", (req, res) => {
+    res.clearCookie("auth");
+    res.redirect("/");
+});
 
-module.exports = router
+module.exports = router;
