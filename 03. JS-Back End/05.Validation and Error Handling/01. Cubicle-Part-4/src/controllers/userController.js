@@ -39,7 +39,7 @@ router.post("/register", async (req, res) => {
         res.redirect("/users/login");
     } catch (err) {
         const errorMessages = extractErrorMessages(err);
-        res.render("user/register", {errorMessages});
+        res.render("user/register", { errorMessages });
     }
 });
 

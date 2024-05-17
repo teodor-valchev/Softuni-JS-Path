@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { extractErrorMessages } = require("../helpers/errorHelper");
 const { difficultyLevelViewData } = require("../helpers/viewData");
 const { isAuth } = require("../middlewares/authMiddleware");
 const { getOthers } = require("../service/accessoryService");
@@ -23,9 +24,14 @@ router.post("/create", isAuth, async (req, res) => {
         difficultyLevel: Number(difficultyLevel),
         creator: req.user._id,
     };
-    await createCube(cubeData);
+    try {
+        await createCube(cubeData);
 
-    res.redirect("/");
+        res.redirect("/");
+    } catch (err) {
+        const errorMessages = extractErrorMessages(err);
+        res.render("cube/create", { errorMessages });
+    }
 });
 
 router.get("/details/:cubeId", async (req, res) => {
@@ -61,7 +67,7 @@ router.post("/attach/:cubeId", isAuth, (req, res) => {
     res.redirect(`/cubes/details/${cubeId}`);
 });
 
-router.get("/edit/:cubeId",isAuth, async (req, res) => {
+router.get("/edit/:cubeId", isAuth, async (req, res) => {
     const cubeId = req.params.cubeId;
     const cube = await getCube(cubeId).lean();
     const difficultyLevels = difficultyLevelViewData(cube.difficultyLevel);
@@ -69,7 +75,7 @@ router.get("/edit/:cubeId",isAuth, async (req, res) => {
     res.render("cube/edit", { cube, difficultyLevels });
 });
 
-router.post("/edit/:cubeId",isAuth, async (req, res) => {
+router.post("/edit/:cubeId", isAuth, async (req, res) => {
     const cubeId = req.params.cubeId;
     const { name, description, imageUrl, difficultyLevel } = req.body;
     const data = {
@@ -78,13 +84,17 @@ router.post("/edit/:cubeId",isAuth, async (req, res) => {
         imageUrl,
         difficultyLevel,
     };
+    try {
+        await editCube(cubeId, data);
 
-    await editCube(cubeId, data);
-
-    res.redirect(`/cubes/details/${cubeId}`);
+        res.redirect(`/cubes/details/${cubeId}`);
+    } catch (err) {
+        const errorMessages = extractErrorMessages(err);
+        res.render("cube/edit", { errorMessages });
+    }
 });
 
-router.get("/delete/:cubeId",isAuth, async (req, res) => {
+router.get("/delete/:cubeId", isAuth, async (req, res) => {
     const cubeId = req.params.cubeId;
     const cube = await getCube(cubeId).lean();
     const difficultyLevels = difficultyLevelViewData(cube.difficultyLevel);
@@ -92,7 +102,7 @@ router.get("/delete/:cubeId",isAuth, async (req, res) => {
     res.render("cube/delete", { cube, difficultyLevels });
 });
 
-router.post("/delete/:cubeId",isAuth, async (req, res) => {
+router.post("/delete/:cubeId", isAuth, async (req, res) => {
     const cubeId = req.params.cubeId;
     await deleteCube(cubeId);
 

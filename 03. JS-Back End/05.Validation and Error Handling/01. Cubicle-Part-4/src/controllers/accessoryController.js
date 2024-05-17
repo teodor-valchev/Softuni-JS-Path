@@ -1,3 +1,4 @@
+const { extractErrorMessages } = require("../helpers/errorHelper");
 const { createAccessory } = require("../service/accessoryService");
 
 const router = require("express").Router();
@@ -13,9 +14,13 @@ router.post("/create", async (req, res) => {
         description,
         imageUrl,
     };
-    await createAccessory(accessoryData);
-
-    res.redirect("/");
+    try {
+        await createAccessory(accessoryData);
+        res.redirect("/");
+    } catch (err) {
+        const errorMessages = extractErrorMessages(err);
+        res.render("accessory/create", { errorMessages });
+    }
 });
 
 module.exports = router;
