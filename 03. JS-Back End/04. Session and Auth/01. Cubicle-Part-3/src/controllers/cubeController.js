@@ -6,6 +6,7 @@ const {
     getCube,
     attachAccessory,
     editCube,
+    deleteCube,
 } = require("../service/cubeService");
 
 router.get("/create", (req, res) => {
@@ -74,6 +75,21 @@ router.post("/edit/:cubeId", async (req, res) => {
     await editCube(cubeId, data);
 
     res.redirect(`/cubes/details/${cubeId}`);
+});
+
+router.get("/delete/:cubeId", async (req, res) => {
+    const cubeId = req.params.cubeId
+    const cube = await getCube(cubeId).lean();
+    const difficultyLevels = difficultyLevelViewData(cube.difficultyLevel)
+
+    res.render("cube/delete", { cube, difficultyLevels });
+})
+
+router.post("/delete/:cubeId", async (req, res) => {
+    const cubeId = req.params.cubeId;
+    await deleteCube(cubeId)
+
+    res.redirect('/');
 });
 
 module.exports = router;
