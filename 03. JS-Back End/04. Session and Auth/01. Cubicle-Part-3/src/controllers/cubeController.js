@@ -1,9 +1,11 @@
 const router = require("express").Router();
+const { difficultyLevelViewData } = require("../helpers/viewData");
 const { getAllAccessories, getOthers } = require("../service/accessoryService");
 const {
     createCube,
     getCube,
     attachAccessory,
+    editCube,
 } = require("../service/cubeService");
 
 router.get("/create", (req, res) => {
@@ -17,6 +19,7 @@ router.post("/create", async (req, res) => {
         description,
         imageUrl,
         difficultyLevel: Number(difficultyLevel),
+        creator: req.user._id,
     };
     await createCube(cubeData);
 
@@ -46,6 +49,29 @@ router.post("/attach/:cubeId", (req, res) => {
     const { accessory: accessoryId } = req.body;
     const cubeId = req.params.cubeId;
     attachAccessory(cubeId, accessoryId);
+
+    res.redirect(`/cubes/details/${cubeId}`);
+});
+
+router.get("/edit/:cubeId", async (req, res) => {
+    const cubeId = req.params.cubeId;
+    const cube = await getCube(cubeId).lean();
+    const difficultyLevels = difficultyLevelViewData(cube.difficultyLevel);
+
+    res.render("cube/edit", { cube, difficultyLevels });
+});
+
+router.post("/edit/:cubeId", async (req, res) => {
+    const cubeId = req.params.cubeId;
+    const { name, description, imageUrl, difficultyLevel } = req.body;
+    const data = {
+        name,
+        description,
+        imageUrl,
+        difficultyLevel,
+    };
+
+    await editCube(cubeId, data);
 
     res.redirect(`/cubes/details/${cubeId}`);
 });
