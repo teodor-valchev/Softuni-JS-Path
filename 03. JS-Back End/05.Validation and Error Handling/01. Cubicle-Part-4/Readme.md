@@ -16,6 +16,9 @@ Cubicle is a web application built with Express.js for managing and showcasing a
 
 For example, adding a new cat breed called "Persian cat" should be followed by creating a new cat with the newly created breed "Persian cat", name "Niya", description "Lonely and lazy cat seeks hospitable owner", and an imported image. After adding the cat, the home page ('/') should display all cats in the shelter, including the newly added one.
 
+## Error Handling
+In case of errors, such as if the given username is already taken, does not exist, or the given password (while logging in) is incorrect, handle the error properly and show an appropriate notification.
+
 ## Routing
 
 - `/` - the main page (should visualize all the cubes in the database and a search field)
@@ -66,7 +69,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd 03. JS-Back End/02. ExpressJS and Templating/02. Cubicle-Part-1
+  cd 03. JS-Back End/05.Validation and Error Handling/01. Cubicle-Part-4  
 ```
 
 Install dependencies
