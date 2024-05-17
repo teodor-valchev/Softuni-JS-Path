@@ -3,15 +3,11 @@
 
 Cubicle is a web application built with Express.js for managing and showcasing a collection of items. It provides a platform for users to browse, add, edit, and delete items within their collection.
 
-
 ## Functionality
 
 - Browse a collection of items
 - Add new items to the collection
-- Edit existing items
-- Delete items from the collection
 - Create and attach accessories to items
-
 
 ## Expected Behavior
 
@@ -20,10 +16,10 @@ For example, adding a new cat breed called "Persian cat" should be followed by c
 
 - `/` - the main page (should visualize all the cubes in the database and a search field)
 - `/about` – should render the about page
-- `/create` – should render the create cube form
-- `/details/:id` – should render the details page about selected cube
-- `/create/accessory` - should render the create an accessory form
-- `/attach/accessory/:id` - should render the accessory page about attaching new accessory for a cube
+- `/cubes/create` – should render the create cube form
+- `/cubes/details/:id` – should render the details page about selected cube
+- `/accessories/create/accessory` - should render the create an accessory form
+- `/accessories/attach/accessory/:id` - should render the accessory page about attaching new accessory for a cube
 - `Any other` - should render the 404 not found page
 
 ## Models
