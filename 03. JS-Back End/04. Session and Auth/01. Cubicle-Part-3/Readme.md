@@ -66,7 +66,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd 03. JS-Back End/02. ExpressJS and Templating/02. Cubicle-Part-1
+  cd 03. JS-Back End/04. Session and Auth/01. Cubicle-Part-3
 ```
 
 Install dependencies

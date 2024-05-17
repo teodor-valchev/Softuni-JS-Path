@@ -51,7 +51,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd 03. JS-Back End/02. ExpressJS and Templating/02. Cubicle-Part-1
+  cd 03. JS-Back End/03. MongoDb-and-Mongoose/01. Cubicle-Part-2
 ```
 
 Install dependencies
