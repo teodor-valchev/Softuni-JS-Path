@@ -1,3 +1,4 @@
+const { extractErrorMessages } = require("../helpers/errorHelper");
 const { register, login } = require("../service/authService");
 
 const router = require("express").Router();
@@ -9,10 +10,15 @@ router.get("/login", (req, res) => {
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
-    const token = await login(username, password);
-    res.cookie("auth", token);
+    try {
+        const token = await login(username, password);
+        res.cookie("auth", token);
 
-    res.redirect("/");
+        res.redirect("/");
+    } catch (err) {
+        const errorMessages = extractErrorMessages(err);
+        res.render("user/login", { errorMessages });
+    }
 });
 
 router.get("/register", (req, res) => {
@@ -27,9 +33,14 @@ router.post("/register", async (req, res) => {
         repeatPassword,
     };
 
-    await register(userData);
+    try {
+        await register(userData);
 
-    res.redirect("/users/login");
+        res.redirect("/users/login");
+    } catch (err) {
+        const errorMessages = extractErrorMessages(err);
+        res.render("user/register", {errorMessages});
+    }
 });
 
 router.get("/logout", (req, res) => {

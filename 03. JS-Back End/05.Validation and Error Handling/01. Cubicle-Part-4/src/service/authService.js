@@ -9,13 +9,13 @@ exports.login = async (username, password) => {
     const user = await User.findOne({ username }).lean();
 
     if (!user) {
-        throw new Error("Username or password don\t match!");
+        throw new Error("Username or password dont match!");
     }
 
     const isValid = await bcrypt.compare(password, user.password);
 
     if (!isValid) {
-        throw new Error("Username or password don\t match!");
+        throw new Error("Username or password dont match!");
     }
 
     const payload = {
