@@ -20,10 +20,15 @@ For example, adding a new cat breed called "Persian cat" should be followed by c
 
 - `/` - the main page (should visualize all the cubes in the database and a search field)
 - `/about` – should render the about page
-- `/create` – should render the create cube form
-- `/details/:id` – should render the details page about selected cube
-- `/create/accessory` - should render the create an accessory form
-- `/attach/accessory/:id` - should render the accessory page about attaching new accessory for a cube
+- `/cubes/create` – should render the create cube form
+- `/cubes/edit/:id` – should render the edit page about selected cube
+- `/cubes/delete/:id` – should render the delete page about selected cube
+- `/cubes/details/:id` – should render the details page about selected cube
+- `/accessories/create` - should render the create an accessory form
+- `/accessories/attach/accessory/:id` - should render the accessory page about attaching new accessory for a cube
+- `/users/register` – should render the register page
+- `/users/login` – should render the login page
+- `/users/logout` – should logout user and delete cookie
 - `Any other` - should render the 404 not found page
 
 ## Models
@@ -35,6 +40,7 @@ Cube:
 - `imageUrl`: Reference to an image displaying the cube (string)
 - `difficultyLevel`: Reference to the difficultyLevel of the cube (number)
 - `accessories`: ObjectId, ref Accessories Model (array)
+- `creator`: ObjectId, ref User Model (ObjectId)
 
 Accessory:
 
