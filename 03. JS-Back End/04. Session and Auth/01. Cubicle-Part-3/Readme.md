@@ -3,7 +3,6 @@
 
 Cubicle is a web application built with Express.js for managing and showcasing a collection of items. It provides a platform for users to browse, add, edit, and delete items within their collection.
 
-
 ## Functionality
 
 - Browse a collection of items
@@ -11,11 +10,12 @@ Cubicle is a web application built with Express.js for managing and showcasing a
 - Edit existing items
 - Delete items from the collection
 - Create and attach accessories to items
-
+- User registration, login, and logout
 
 ## Expected Behavior
 
 For example, adding a new cat breed called "Persian cat" should be followed by creating a new cat with the newly created breed "Persian cat", name "Niya", description "Lonely and lazy cat seeks hospitable owner", and an imported image. After adding the cat, the home page ('/') should display all cats in the shelter, including the newly added one.
+
 ## Routing
 
 - `/` - the main page (should visualize all the cubes in the database and a search field)
@@ -43,6 +43,11 @@ Accessory:
 - `description`: Additional information about the accessory (string)
 - `imageUrl`: Reference to an image displaying the accessory (string)
 
+User:
+
+- `_id`: Unique identifier (ObjectId)
+- `username`: Required string representing the users's name
+- `password`: Required string representing the users's password (string)
 
 ## Run Locally
 
@@ -75,5 +80,5 @@ Start the server
 
 **Client:** HTML, CSS, JavaScript, Handlebars
 
-**Server:** Node, Express, MongoDB with Mongoose
+**Server:** Node, Express, MongoDB with Mongoose, jsonwebtoken, bcrypt, cookie-parser
 
