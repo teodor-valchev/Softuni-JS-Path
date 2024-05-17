@@ -6,9 +6,13 @@ exports.auth = async (req, res, next) => {
 
     if (token) {
         try {
-            const user = await jwt.verify(token, SECRET);
-            req.user = user;
+            const decodedToken = await jwt.verify(token, SECRET);
+            req.user = decodedToken
+            // in res.locals we can save different objects and access them when we make requests at any time and in the templates also.
+            res.locals.user = decodedToken;
+            res.locals.isAuthenticated = true;
             next();
+            return
         } catch (err) {
             res.clearCookie("auth");
             res.redirect("/users/login");
@@ -18,3 +22,14 @@ exports.auth = async (req, res, next) => {
         next();
     }
 };
+
+//middleware for route guard
+exports.isAuth = (req, res, next) => {
+    const user = req.user
+    if (!user) {
+        res.redirect('/users/login')
+        next()
+        return
+    }
+    next()
+}
