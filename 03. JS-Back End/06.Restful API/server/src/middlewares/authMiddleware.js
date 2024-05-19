@@ -18,14 +18,3 @@ exports.auth = async (req, res, next) => {
         next();
     }
 };
-
-//middleware for route guard
-exports.isAuth = (req, res, next) => {
-    const user = req.user;
-    if (!user) {
-        res.redirect("/users/login");
-        next();
-        return;
-    }
-    next();
-};
