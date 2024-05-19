@@ -4,7 +4,8 @@ const jwt = require("../utils/jwt");
 const { SECRET } = require("../constants");
 
 exports.register = async (userData) => {
-    const result = await getAuthToken(userData);
+    const user = await User.create(userData)
+    const result = await getAuthToken(user);
     return result;
 };
 
