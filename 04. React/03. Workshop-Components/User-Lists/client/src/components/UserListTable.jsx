@@ -3,23 +3,27 @@ import UserListItem from "./UserListItem";
 import * as userService from "../services/userService.js";
 import NoUsersOverlap from "./NoUsersOverlap.jsx";
 import NoContentOverlap from "./NoContentOverlap.jsx";
+import LoadingSpinner from "./LoadingSpinner.jsx";
 
 const UserListTable = () => {
     const [users, setUsers] = useState([]);
     const [isError, setIsError] = useState(false);
+    const [isLoading,setIsLoading] = useState(true)
 
     useEffect(() => {
         userService
             .getAll()
             .then((result) => setUsers(result))
             .catch((err) => {
-                setIsError(true);
-            });
+                setIsError(true)
+            }).finally(()=> setIsLoading(false));
     }, []);
 
     console.log(users);
     return (
         <div className="table-wrapper">
+            {isLoading && <LoadingSpinner />}
+            
             <table className="table">
                 <thead>
                     <tr>

@@ -13,9 +13,7 @@ const UserList = () => {
             <button className="btn-add btn">Add new user</button>
             {/* <!-- Overlap components  --> */}
 
-            {/* <div className="loading-shade">
-                    Loading spinner  
-                    <div className="spinner"></div> */}
+           
 
             {/* <!-- No content overlap component  --> */}
 
@@ -37,8 +35,6 @@ const UserList = () => {
               </svg>
               <h2>Sorry, we couldn't find what you're looking for.</h2>
             </div> */}
-
-            {/* </div> spinner */}
 
             <Pagination />
         </section>
