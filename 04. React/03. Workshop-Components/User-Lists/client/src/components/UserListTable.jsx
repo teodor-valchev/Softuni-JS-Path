@@ -4,11 +4,13 @@ import * as userService from "../services/userService.js";
 import NoUsersOverlap from "./NoUsersOverlap.jsx";
 import NoContentOverlap from "./NoContentOverlap.jsx";
 import LoadingSpinner from "./LoadingSpinner.jsx";
+import UserDetailsModal from "./UserDetailsModal.jsx";
 
 const UserListTable = () => {
     const [users, setUsers] = useState([]);
     const [isError, setIsError] = useState(false);
-    const [isLoading,setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true);
+    const [isShowInfo,setIsShowInfo] = useState(false)
 
     useEffect(() => {
         userService
@@ -19,11 +21,16 @@ const UserListTable = () => {
             }).finally(()=> setIsLoading(false));
     }, []);
 
+    const onInfoClickHandler = (id) => {
+        setIsShowInfo(true);
+        console.log(id);
+    }
+
     console.log(users);
     return (
         <div className="table-wrapper">
             {isLoading && <LoadingSpinner />}
-            
+
             <table className="table">
                 <thead>
                     <tr>
@@ -123,8 +130,13 @@ const UserListTable = () => {
                 </thead>
                 <tbody>
                     {users.map((user) => (
-                        <UserListItem key={user._id} {...user} />
+                        <UserListItem
+                            key={user._id}
+                            {...user}
+                            onInfoClickHandler={onInfoClickHandler}
+                        />
                     ))}
+                    { isShowInfo && <UserDetailsModal/>}
                 </tbody>
             </table>
             {!users.length && !isError && <NoUsersOverlap />}

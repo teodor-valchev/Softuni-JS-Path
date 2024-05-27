@@ -13,8 +13,6 @@ const UserList = () => {
             <button className="btn-add btn">Add new user</button>
             {/* <!-- Overlap components  --> */}
 
-           
-
             {/* <!-- No content overlap component  --> */}
 
             {/* <div className="table-overlap">

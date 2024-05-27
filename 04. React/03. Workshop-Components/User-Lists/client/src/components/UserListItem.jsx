@@ -7,11 +7,21 @@ const UserListItem = ({
     phoneNumber,
     createdAt,
     imageUrl,
+    onInfoClickHandler,
+    _id
 }) => {
+
+    const infoHandler = () => {
+        onInfoClickHandler(_id);
+    };
     return (
         <tr>
             <td>
-                <img src={imageUrl} alt={`${firstName}'s Profile`} className="image" />
+                <img
+                    src={imageUrl}
+                    alt={`${firstName}'s Profile`}
+                    className="image"
+                />
             </td>
             <td>{firstName}</td>
             <td>{lastName}</td>
@@ -54,7 +64,11 @@ const UserListItem = ({
                         ></path>
                     </svg>
                 </button>
-                <button className="btn info-btn" title="Info">
+                <button
+                    onClick={infoHandler}
+                    className="btn info-btn"
+                    title="Info"
+                >
                     <svg
                         aria-hidden="true"
                         focusable="false"
