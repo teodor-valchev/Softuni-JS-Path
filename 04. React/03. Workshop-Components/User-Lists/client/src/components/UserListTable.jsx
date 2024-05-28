@@ -6,6 +6,7 @@ import NoContentOverlap from "./NoContentOverlap.jsx";
 import LoadingSpinner from "./LoadingSpinner.jsx";
 import UserDetailsModal from "./UserDetailsModal.jsx";
 import UserDeleteModal from "./UserDeleteModal.jsx";
+import UserCreateModal from "./UserCreateModal.jsx";
 
 const UserListTable = () => {
     const [users, setUsers] = useState([]);
@@ -14,6 +15,7 @@ const UserListTable = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [showInfo, setShowInfo] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
+    const [showCreate, setShowCreate] = useState(false)
     const [deleteUser, setDeleteUser] = useState('')
 
     useEffect(() => {
@@ -37,7 +39,22 @@ const UserListTable = () => {
 
     const deleteHandler = () => {
         setUsers(users.filter((u) => u._id !== deleteUser));
-        userService.deleteUser(deleteUser)
+        userService.deleteUser(deleteUser).then(res => alert('User is successfully deleted!'))
+    }
+
+    const onCreateClickHandler = () => {
+        setShowCreate(true);
+    }
+
+    const onCreate = (e) => {
+        e.preventDefault()
+        
+        const formData = Object.fromEntries(new FormData(e.target))
+        
+        userService.createUser(formData).then(res => setUsers((state) => [...state, res]))
+
+        setShowCreate(false)
+
     }
 
     console.log(users);
@@ -59,6 +76,12 @@ const UserListTable = () => {
                     deleteHandler={deleteHandler}
                 />
             )}
+
+            {showCreate &&
+                <UserCreateModal
+                onCloseModal={() => setShowCreate(false)}
+                onCreate={onCreate}
+            />}
 
             <table className="table">
                 <thead>
@@ -170,6 +193,8 @@ const UserListTable = () => {
             </table>
             {!users.length && !isError && <NoUsersOverlap />}
             {isError && <NoContentOverlap />}
+
+            <button onClick={onCreateClickHandler} className="btn-add btn">Add new user</button>
         </div>
     );
 };
