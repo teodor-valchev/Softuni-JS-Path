@@ -13,3 +13,9 @@ export const getAll = async () => {
         throw error
     }
 };
+
+export const getOne = async (userId) => {
+    const fetchData = await fetch(baseUrl + `/${userId}`)
+    const user = await fetchData.json()
+    return user
+} 

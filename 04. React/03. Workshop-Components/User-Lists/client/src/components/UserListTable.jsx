@@ -8,9 +8,10 @@ import UserDetailsModal from "./UserDetailsModal.jsx";
 
 const UserListTable = () => {
     const [users, setUsers] = useState([]);
+    const [user,setUser] = useState({})
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [isShowInfo,setIsShowInfo] = useState(false)
+    const [showInfo, setShowInfo] = useState(false);
 
     useEffect(() => {
         userService
@@ -22,14 +23,21 @@ const UserListTable = () => {
     }, []);
 
     const onInfoClickHandler = (id) => {
-        setIsShowInfo(true);
-        console.log(id);
+        setShowInfo(true);
+        userService.getOne(id).then(res => setUser(res))
     }
 
     console.log(users);
     return (
         <div className="table-wrapper">
             {isLoading && <LoadingSpinner />}
+
+            {showInfo && (
+                <UserDetailsModal
+                    {...user}
+                    onCloseModal={() => setShowInfo(false)}
+                />
+            )}
 
             <table className="table">
                 <thead>
@@ -136,7 +144,6 @@ const UserListTable = () => {
                             onInfoClickHandler={onInfoClickHandler}
                         />
                     ))}
-                    { isShowInfo && <UserDetailsModal/>}
                 </tbody>
             </table>
             {!users.length && !isError && <NoUsersOverlap />}
