@@ -64,7 +64,7 @@ export const editUser = async (userId, newData) => {
         lastName: newData.lastName,
         email: newData.email,
         createdAt: currentUser.createdAt,
-        phoneNumber: newData.phoneNumber,//created at?
+        phoneNumber: newData.phoneNumber,
         updatedAt: new Date().toISOString(),
         imageUrl: newData.imageUrl,
         address: {
