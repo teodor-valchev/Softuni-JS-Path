@@ -7,16 +7,18 @@ import LoadingSpinner from "./LoadingSpinner.jsx";
 import UserDetailsModal from "./UserDetailsModal.jsx";
 import UserDeleteModal from "./UserDeleteModal.jsx";
 import UserCreateModal from "./UserCreateModal.jsx";
+import UserEditModal from "./UserEditModal.jsx";
 
 const UserListTable = () => {
     const [users, setUsers] = useState([]);
-    const [user,setUser] = useState({})
+    const [user, setUser] = useState({});
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [showInfo, setShowInfo] = useState(false);
     const [showDelete, setShowDelete] = useState(false);
-    const [showCreate, setShowCreate] = useState(false)
-    const [deleteUser, setDeleteUser] = useState('')
+    const [showCreate, setShowCreate] = useState(false);
+    const [showEdit, setShowEdit] = useState(false);
+    const [deleteUser, setDeleteUser] = useState('');
 
     useEffect(() => {
         userService
@@ -57,6 +59,22 @@ const UserListTable = () => {
 
     }
 
+    const onEditClickHandler = (userId) => {
+        setShowEdit(true)
+        userService.getOne(userId).then((res) => setUser(res));
+    }
+
+    const onEdit = (e) => {
+        e.preventDefault()
+        
+        const formData = Object.fromEntries(new FormData(e.target))
+        
+        userService.editUser(formData.id, formData).then(res => setUsers(state => state.map(u => u._id === res._id ? res : u)))
+        
+        setShowEdit(false);
+
+    }
+
     console.log(users);
     return (
         <div className="table-wrapper">
@@ -77,11 +95,20 @@ const UserListTable = () => {
                 />
             )}
 
-            {showCreate &&
+            {showCreate && (
                 <UserCreateModal
-                onCloseModal={() => setShowCreate(false)}
-                onCreate={onCreate}
-            />}
+                    onCloseModal={() => setShowCreate(false)}
+                    onCreate={onCreate}
+                />
+            )}
+
+            {showEdit && (
+                <UserEditModal
+                    onCloseModal={() => setShowEdit(false)}
+                    onEdit={onEdit}
+                    {...user}
+                />
+            )}
 
             <table className="table">
                 <thead>
@@ -187,14 +214,18 @@ const UserListTable = () => {
                             {...user}
                             onInfoClickHandler={onInfoClickHandler}
                             onDeleteClickHandler={onDeleteClickHandler}
+                            onEditClickHandler={onEditClickHandler}
                         />
                     ))}
                 </tbody>
             </table>
             {!users.length && !isError && <NoUsersOverlap />}
+
             {isError && <NoContentOverlap />}
 
-            <button onClick={onCreateClickHandler} className="btn-add btn">Add new user</button>
+            <button onClick={onCreateClickHandler} className="btn-add btn">
+                Add new user
+            </button>
         </div>
     );
 };

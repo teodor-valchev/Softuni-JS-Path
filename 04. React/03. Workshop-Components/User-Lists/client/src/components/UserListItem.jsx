@@ -10,12 +10,16 @@ const UserListItem = ({
     imageUrl,
     onInfoClickHandler,
     onDeleteClickHandler,
+    onEditClickHandler
 }) => {
     const infoHandler = () => {
         onInfoClickHandler(_id);
     };
     const deleteHandler = () => {
         onDeleteClickHandler(_id);
+    }
+    const editHandler = () => {
+        onEditClickHandler(_id)
     }
     return (
         <tr>
@@ -33,7 +37,11 @@ const UserListItem = ({
             <td>{convertDateToISO(createdAt)}</td>
 
             <td className="actions">
-                <button className="btn edit-btn" title="Edit">
+                <button
+                    onClick={editHandler}
+                    className="btn edit-btn"
+                    title="Edit"
+                >
                     <svg
                         aria-hidden="true"
                         focusable="false"

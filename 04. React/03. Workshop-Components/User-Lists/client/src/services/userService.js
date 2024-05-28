@@ -55,3 +55,35 @@ export const createUser = async (userData) => {
 
     return result;
 };
+
+export const editUser = async (userId, newData) => {
+    const currentUser = await getOne(userId)
+    const editedData = {
+        _id: userId,
+        firstName: newData.firstName,
+        lastName: newData.lastName,
+        email: newData.email,
+        createdAt: currentUser.createdAt,
+        phoneNumber: newData.phoneNumber,//created at?
+        updatedAt: new Date().toISOString(),
+        imageUrl: newData.imageUrl,
+        address: {
+            country: newData.country,
+            city: newData.city,
+            street: newData.street,
+            streetNumber: newData.streetNumber,
+        },
+    };
+
+    const fetchData = await fetch(baseUrl + `/${userId}`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(editedData)
+    })
+
+    const jsonData = await fetchData.json();
+    
+    return jsonData
+}
