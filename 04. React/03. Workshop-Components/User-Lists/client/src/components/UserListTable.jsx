@@ -18,21 +18,22 @@ const UserListTable = () => {
     const [showDelete, setShowDelete] = useState(false);
     const [showCreate, setShowCreate] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-    const [deleteUser, setDeleteUser] = useState('');
+    const [deleteUser, setDeleteUser] = useState("");
 
     useEffect(() => {
         userService
             .getAll()
             .then((result) => setUsers(result))
             .catch((err) => {
-                setIsError(true)
-            }).finally(()=> setIsLoading(false));
+                setIsError(true);
+            })
+            .finally(() => setIsLoading(false));
     }, []);
 
     const onInfoClickHandler = (id) => {
         setShowInfo(true);
-        userService.getOne(id).then(res => setUser(res))
-    }
+        userService.getOne(id).then((res) => setUser(res));
+    };
 
     const onDeleteClickHandler = (userId) => {
         setDeleteUser(userId);
@@ -41,38 +42,79 @@ const UserListTable = () => {
 
     const deleteHandler = () => {
         setUsers(users.filter((u) => u._id !== deleteUser));
-        userService.deleteUser(deleteUser).then(res => alert('User is successfully deleted!'))
-    }
+        userService
+            .deleteUser(deleteUser)
+            .then((res) => alert("User is successfully deleted!"));
+    };
 
     const onCreateClickHandler = () => {
         setShowCreate(true);
-    }
+    };
 
     const onCreate = (e) => {
-        e.preventDefault()
-        
-        const formData = Object.fromEntries(new FormData(e.target))
-        
-        userService.createUser(formData).then(res => setUsers((state) => [...state, res]))
+        e.preventDefault();
 
-        setShowCreate(false)
+        const formData = Object.fromEntries(new FormData(e.target));
 
-    }
+        userService
+            .createUser(formData)
+            .then((res) => setUsers((state) => [...state, res]));
+
+        setShowCreate(false);
+    };
 
     const onEditClickHandler = (userId) => {
-        setShowEdit(true)
+        setShowEdit(true);
         userService.getOne(userId).then((res) => setUser(res));
-    }
+    };
 
     const onEdit = (e) => {
-        e.preventDefault()
-        
-        const formData = Object.fromEntries(new FormData(e.target))
-        
-        userService.editUser(formData.id, formData).then(res => setUsers(state => state.map(u => u._id === res._id ? res : u)))
-        
-        setShowEdit(false);
+        e.preventDefault();
 
+        const formData = Object.fromEntries(new FormData(e.target));
+
+        userService
+            .editUser(formData.id, formData)
+            .then((res) =>
+                setUsers((state) =>
+                    state.map((u) => (u._id === res._id ? res : u))
+                )
+            );
+
+        setShowEdit(false);
+    };
+
+    const OnClickDescending = () => {
+        const sortedUsers = [...users].sort((a, b) => {
+            const lastNameA = a.lastName.toLowerCase();
+            const lastNameB = b.lastName.toLowerCase();
+
+            if (lastNameA > lastNameB) {
+                return -1;
+            }
+            if (lastNameA < lastNameB) {
+                return 1;
+            }
+            return 0;
+        });
+
+        setUsers(sortedUsers);
+    };
+
+    const OnClickAscending = () => {
+        const sortedUsers = [...users].sort((a, b) => {
+            const lastNameA = a.firstName.toLowerCase();
+            const lastNameB = b.firstName.toLowerCase();
+
+            if (lastNameA < lastNameB) {
+                return -1;
+            }
+            if (lastNameA > lastNameB) {
+                return 1;
+            }
+            return 0;
+        });
+        setUsers(sortedUsers);
     }
 
     console.log(users);
@@ -114,7 +156,7 @@ const UserListTable = () => {
                 <thead>
                     <tr>
                         <th>Image</th>
-                        <th>
+                        <th onClick={OnClickAscending}>
                             First name
                             <svg
                                 aria-hidden="true"
@@ -132,13 +174,13 @@ const UserListTable = () => {
                                 ></path>
                             </svg>
                         </th>
-                        <th>
+                        <th onClick={OnClickDescending}>
                             Last name
                             <svg
                                 aria-hidden="true"
                                 focusable="false"
                                 data-prefix="fas"
-                                data-icon="arrow-down"
+                                data-icon="arrow-up"
                                 className="icon svg-inline--fa fa-arrow-down Table_icon__+HHgn"
                                 role="img"
                                 xmlns="http://www.w3.org/2000/svg"
