@@ -5,6 +5,7 @@ import NoUsersOverlap from "./NoUsersOverlap.jsx";
 import NoContentOverlap from "./NoContentOverlap.jsx";
 import LoadingSpinner from "./LoadingSpinner.jsx";
 import UserDetailsModal from "./UserDetailsModal.jsx";
+import UserDeleteModal from "./UserDeleteModal.jsx";
 
 const UserListTable = () => {
     const [users, setUsers] = useState([]);
@@ -12,6 +13,8 @@ const UserListTable = () => {
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [showInfo, setShowInfo] = useState(false);
+    const [showDelete, setShowDelete] = useState(false);
+    const [deleteUser, setDeleteUser] = useState('')
 
     useEffect(() => {
         userService
@@ -27,6 +30,16 @@ const UserListTable = () => {
         userService.getOne(id).then(res => setUser(res))
     }
 
+    const onDeleteClickHandler = (userId) => {
+        setDeleteUser(userId);
+        setShowDelete(true);
+    };
+
+    const deleteHandler = () => {
+        setUsers(users.filter((u) => u._id !== deleteUser));
+        userService.deleteUser(deleteUser)
+    }
+
     console.log(users);
     return (
         <div className="table-wrapper">
@@ -36,6 +49,14 @@ const UserListTable = () => {
                 <UserDetailsModal
                     {...user}
                     onCloseModal={() => setShowInfo(false)}
+                />
+            )}
+
+            {showDelete && (
+                <UserDeleteModal
+                    OnCloseModal={() => setShowDelete(false)}
+                    onDeleteClickHandler={onDeleteClickHandler}
+                    deleteHandler={deleteHandler}
                 />
             )}
 
@@ -142,6 +163,7 @@ const UserListTable = () => {
                             key={user._id}
                             {...user}
                             onInfoClickHandler={onInfoClickHandler}
+                            onDeleteClickHandler={onDeleteClickHandler}
                         />
                     ))}
                 </tbody>

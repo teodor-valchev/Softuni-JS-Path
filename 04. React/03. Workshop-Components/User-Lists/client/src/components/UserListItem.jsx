@@ -1,6 +1,7 @@
 import convertDateToISO from '../utils/dateConverter.js'
 
 const UserListItem = ({
+    _id,
     firstName,
     email,
     lastName,
@@ -8,12 +9,14 @@ const UserListItem = ({
     createdAt,
     imageUrl,
     onInfoClickHandler,
-    _id
+    onDeleteClickHandler,
 }) => {
-
     const infoHandler = () => {
         onInfoClickHandler(_id);
     };
+    const deleteHandler = () => {
+        onDeleteClickHandler(_id);
+    }
     return (
         <tr>
             <td>
@@ -47,7 +50,11 @@ const UserListItem = ({
                         ></path>
                     </svg>
                 </button>
-                <button className="btn delete-btn" title="Delete">
+                <button
+                    onClick={deleteHandler}
+                    className="btn delete-btn"
+                    title="Delete"
+                >
                     <svg
                         aria-hidden="true"
                         focusable="false"
