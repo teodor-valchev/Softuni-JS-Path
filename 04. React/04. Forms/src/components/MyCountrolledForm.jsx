@@ -1,32 +1,44 @@
 import { useState } from "react";
 
 export default function MyControlledForm() {
-    const [userNameValue, setUsernameValue] = useState("");
-    const [passwordValue, setPasswordValue] = useState("");
+    const [formData, setFormData] = useState({
+        username: "",
+        password: "",
+    }); // handling multiple fields with a single State
 
-    const userNameOnChangeHandler = (e) => {
-        setUsernameValue(e.currentTarget.value);
+    const onChangeHandler = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
-    const passwordOnChangeHandler = (e) => {
-        setPasswordValue(e.target.value);
-    };
+    // adding state foreach input
+    // const [userNameValue, setUsernameValue] = useState("");
+    // const [passwordValue, setPasswordValue] = useState("");
+
+    // const userNameOnChangeHandler = (e) => {
+    //     setUsernameValue(e.currentTarget.value);
+    // };
+
+    // const passwordOnChangeHandler = (e) => {
+    //     setPasswordValue(e.target.value);
+    // };
 
     const onFormSubmit = (e) => {
         e.preventDefault();
+        alert(formData.username)
     };
 
     return (
         <>
             <h1>MyControlled Form</h1>
 
-            <form>
+            <form onSubmit={onFormSubmit}>
                 <div>
                     <label htmlFor="username">Username</label>
                     <input
-                        onChange={userNameOnChangeHandler}
+                        onChange={onChangeHandler}
                         type="text"
-                        value={userNameValue}
+                        value={formData.username}
                         name="username"
                         id="username"
                     />
@@ -35,20 +47,14 @@ export default function MyControlledForm() {
                     <label htmlFor="password">Password</label>
                     <input
                         type="password"
-                        onChange={passwordOnChangeHandler}
-                        value={passwordValue}
+                        onChange={onChangeHandler}
+                        value={formData.password}
                         name="password"
                         id="password"
                     />
                 </div>
                 <div>
-                    <label htmlFor="age">Age</label>
-                    <input type="number" name="age" id="age" />
-                </div>
-                <div>
-                    <button type="submit" onClick={onFormSubmit}>
-                        Register
-                    </button>
+                    <button type="submit">Register</button>
                     <button type="button">Reset</button>
                 </div>
             </form>
