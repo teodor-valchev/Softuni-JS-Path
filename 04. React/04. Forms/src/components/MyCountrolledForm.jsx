@@ -1,32 +1,54 @@
+import { useState } from "react";
+
 export default function MyControlledForm() {
-    const submitHandler = (e) => {
+    const [userNameValue, setUsernameValue] = useState("");
+    const [passwordValue, setPasswordValue] = useState("");
+
+    const userNameOnChangeHandler = (e) => {
+        setUsernameValue(e.currentTarget.value);
+    };
+
+    const passwordOnChangeHandler = (e) => {
+        setPasswordValue(e.target.value);
+    };
+
+    const onFormSubmit = (e) => {
         e.preventDefault();
-
-        const formData = new FormData(e.currentTarget);
-
-        console.log(formData.get("username"));
-        console.log(formData.get("password"));
     };
 
     return (
         <>
             <h1>MyControlled Form</h1>
 
-            <form onSubmit={submitHandler}>
+            <form>
                 <div>
                     <label htmlFor="username">Username</label>
-                    <input type="text" name="username" id="username" />
+                    <input
+                        onChange={userNameOnChangeHandler}
+                        type="text"
+                        value={userNameValue}
+                        name="username"
+                        id="username"
+                    />
                 </div>
                 <div>
                     <label htmlFor="password">Password</label>
-                    <input type="password" name="password" id="password" />
+                    <input
+                        type="password"
+                        onChange={passwordOnChangeHandler}
+                        value={passwordValue}
+                        name="password"
+                        id="password"
+                    />
                 </div>
                 <div>
                     <label htmlFor="age">Age</label>
                     <input type="number" name="age" id="age" />
                 </div>
                 <div>
-                    <button>Register</button>
+                    <button type="submit" onClick={onFormSubmit}>
+                        Register
+                    </button>
                     <button type="button">Reset</button>
                 </div>
             </form>
