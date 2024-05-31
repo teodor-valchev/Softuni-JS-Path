@@ -1,11 +1,9 @@
 import MyControlledForm from "./components/MyCountrolledForm";
-import "./App.css";
+import './App.css'
 
 function App() {
     return (
-        <>
-            <MyControlledForm />
-        </>
+              <MyControlledForm />
     );
 }
 

@@ -1,16 +1,5 @@
-import { useState } from "react";
 
 export default function MyControlledForm() {
-    const [formData, setFormData] = useState({
-        username: "",
-        password: "",
-    }); // handling multiple fields with a single State
-
-    const onChangeHandler = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({ ...prevData, [name]: value }));
-    };
-
     // adding state foreach input
     // const [userNameValue, setUsernameValue] = useState("");
     // const [passwordValue, setPasswordValue] = useState("");
@@ -23,41 +12,51 @@ export default function MyControlledForm() {
     //     setPasswordValue(e.target.value);
     // };
 
-    const onFormSubmit = (e) => {
-        e.preventDefault();
-        alert(formData.username)
-    };
-
     return (
-        <>
-            <h1>MyControlled Form</h1>
-
-            <form onSubmit={onFormSubmit}>
-                <div>
-                    <label htmlFor="username">Username</label>
+        <div className="main-form">
+            <div className="form">
+                <div className="title">Welcome</div>
+                <div className="subtitle">Let's create your account!</div>
+                <div className="input-container ic1">
                     <input
-                        onChange={onChangeHandler}
+                        id="firstname"
+                        className="input"
                         type="text"
-                        value={formData.username}
-                        name="username"
-                        id="username"
+                        placeholder=" "
                     />
+                    <div className="cut"></div>
+                    <label htmlFor="firstname" className="placeholder">
+                        First name
+                    </label>
                 </div>
-                <div>
-                    <label htmlFor="password">Password</label>
+                <div className="input-container ic2">
                     <input
-                        type="password"
-                        onChange={onChangeHandler}
-                        value={formData.password}
-                        name="password"
-                        id="password"
+                        id="lastname"
+                        className="input"
+                        type="text"
+                        placeholder=" "
                     />
+                    <div className="cut"></div>
+                    <label htmlFor="lastname" className="placeholder">
+                        Last name
+                    </label>
                 </div>
-                <div>
-                    <button type="submit">Register</button>
-                    <button type="button">Reset</button>
+                <div className="input-container ic2">
+                    <input
+                        id="email"
+                        className="input"
+                        type="text"
+                        placeholder=" "
+                    />
+                    <div className="cut cut-short"></div>
+                    <label htmlFor="email" className="placeholder">
+                        Email
+                    </label>
                 </div>
-            </form>
-        </>
+                <button type="submit" className="submit">
+                    submit
+                </button>
+            </div>
+        </div>
     );
 }
