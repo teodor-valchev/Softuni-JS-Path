@@ -1,150 +1,133 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from "react";
+import styles from "./ControlledForm.module.css";
 
-import styles from './ControlledForm.module.css';
-
-const formInitialState = {
-    username: '',
-    password: '',
-    age: '',
-    gender: 'm',
-    swimming: false,
-    shopping: false,
-    running: false,
+const initialStateErrors = {
+    firstName: false,
+    lastName: false,
+    email:false
 };
 
-export default function ControlledForm({
-    formRef,
-}) {
-    const usernameInputRef = useRef();
-    const isMountedRef = useRef(false);
-    const [formValues, setFormValues] = useState(formInitialState);
-    const [errors, setErrors] = useState({});
+const initialFormState = {
+    firstName: '',
+    lastName: '',
+    email: '',
+};
 
-    useEffect(() => {
-        usernameInputRef.current.focus();
-    }, []);
+export default function MyControlledForm() {
+    const [errors, setErrors] = useState(initialStateErrors);
+    const [formState, setFormState] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+    });
+    // adding state foreach input
+    // const [userNameValue, setUsernameValue] = useState("");
+    // const [passwordValue, setPasswordValue] = useState("");
 
-    // Executes only on update
-    useEffect(() => {
-        if (!isMountedRef.current) {
-            isMountedRef.current = true;
-            return;
-        }
+    // const userNameOnChangeHandler = (e) => {
+    //     setUsernameValue(e.currentTarget.value);
+    // };
 
-        console.log('Form is updated')
-    }, [formValues]);
+    // const passwordOnChangeHandler = (e) => {
+    //     setPasswordValue(e.target.value);
+    // };
 
-    const changeHandler = (e) => {
-        let value = '';
-
-        switch (e.target.type) {
-            case 'number':
-                value = Number(e.target.value);
-                break;
-            case 'checkbox':
-                value = e.target.checked;
-                break;
-            default:
-                value = e.target.value;
-                break;
-        }
-
-        setFormValues(state => ({
-            ...state,
-            [e.target.name]: value,
-        }));
+    const OnChangeHandler = (e) => {
+        const { name, value } = e.target;
+        setFormState((state) => ({ ...state, [name]: value }));
     };
 
-    const resetFormHandler = () => {
-        setFormValues(formInitialState);
-        setErrors({});
-    };
-
-    const submitHandler = (e) => {
+    const onSubmitHandler = (e) => {
         e.preventDefault();
-        console.log(formValues);
-        resetFormHandler();
-    };
-
-    const ageValidator = () => {
-        if (formValues.age < 0 || formValues.age > 120) {
-            setErrors(state => ({
-                ...state,
-                age: 'Age should be between 0 and 120',
-            }));
-        } else {
-            if (errors.age) {
-                setErrors(state => ({ ...state, age: '' }));
-            }
+        if (formState.firstName.length < 5) {
+            setErrors((errors) => ({ ...errors, 'firstName': true }));
         }
-    }
+        if (formState.lastName.length < 5) {
+            setErrors((errors) => ({ ...errors, 'lastName': true }));
+        } if (formState.email.length < 5) {
+            setErrors((errors) => ({ ...errors, 'email': true }));
+        } else {
+            setErrors(initialStateErrors);
+            setFormState(initialFormState)
+        }
+    };
 
     return (
-        <>
-            <h1>Controlled Form</h1>
-
-            <form ref={formRef} onSubmit={submitHandler}>
-                <div>
-                    <label htmlFor="username">Username</label>
+        <div className="main-form">
+            <form onSubmit={onSubmitHandler} className="form">
+                <div className="title">Welcome</div>
+                <div className="subtitle">Let's create your account!</div>
+                <div className="input-container ic">
                     <input
-                        ref={usernameInputRef}
+                        id="firstname"
+                        className={`input ${
+                            errors.firstName ? styles["error-color"] : ""
+                        }`}
                         type="text"
-                        id="username"
-                        name="username"
-                        value={formValues.username}
-                        onChange={changeHandler}
-                        onBlur={() => console.log('onBlur')}
+                        placeholder=" "
+                        name="firstName"
+                        onChange={OnChangeHandler}
+                        value={formState.firstName}
                     />
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={formValues.password}
-                        onChange={changeHandler}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="age">Age</label>
-                    <input
-                        type="number"
-                        id="age"
-                        name="age"
-                        value={formValues.age}
-                        onChange={changeHandler}
-                        onBlur={ageValidator}
-                        className={errors.age && styles.inputError}
-                    />
-                    {errors.age && (
-                        <p className={styles.errorMessage}>{errors.age}</p>
+                    {errors.firstName && (
+                        <span className={styles["error-msg"]}>
+                            Name should be more than five characters!
+                        </span>
                     )}
+                    <div className="cut"></div>
+                    <label htmlFor="firstname" className="placeholder">
+                        First name
+                    </label>
                 </div>
-
-                <div>
-                    <label htmlFor="gender">Geneder</label>
-                    <select name="gender" id="gender" onChange={changeHandler} value={formValues.gender}>
-                        <option value="f">F</option>
-                        <option value="m">M</option>
-                    </select>
+                <div className="input-container ic">
+                    <input
+                        id="lastname"
+                        className={`input ${
+                            errors.lastName ? styles["error-color"] : ""
+                        }`}
+                        type="text"
+                        placeholder=""
+                        name="lastName"
+                        onChange={OnChangeHandler}
+                        value={formState.lastName}
+                    />
+                    {}
+                    {errors.lastName && (
+                        <span className={styles["error-msg"]}>
+                            Name should be more than five characters!
+                        </span>
+                    )}
+                    <div className="cut"></div>
+                    <label htmlFor="lastname" className="placeholder">
+                        Last name
+                    </label>
                 </div>
-
-                <div>
-                    <h3>Hobbies</h3>
-                    <label htmlFor="swimming">Swimming</label>
-                    <input type="checkbox" name="swimming" id="swimming" checked={formValues.swimming} onChange={changeHandler} />
-                    <label htmlFor="shopping">Shopping</label>
-                    <input type="checkbox" name="shopping" id="shopping" checked={formValues.shopping} onChange={changeHandler} />
-                    <label htmlFor="running">Running</label>
-                    <input type="checkbox" name="running" id="running" checked={formValues.running} onChange={changeHandler} />
+                <div className="input-container ic-last">
+                    <input
+                        id="email"
+                        className={`input ${
+                            errors.email ? styles["error-color"] : ""
+                        }`}
+                        type="text"
+                        placeholder=""
+                        name="email"
+                        onChange={OnChangeHandler}
+                        value={formState.email}
+                    />
+                    {errors.email && (
+                        <span className={styles["error-msg"]}>
+                            Email should be more than five characters!
+                        </span>
+                    )}
+                    <div className="cut cut-short"></div>
+                    <label htmlFor="email" className="placeholder">
+                        Email
+                    </label>
                 </div>
-
-                <div>
-                    <button type="submit" disabled={Object.values(errors).some(x => x)} >Register</button>
-                    <button type="button" onClick={resetFormHandler}>Reset</button>
-                </div>
+                <button type="submit" className="submit">
+                    submit
+                </button>
             </form>
-        </>
+        </div>
     );
 }
