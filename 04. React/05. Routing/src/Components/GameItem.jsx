@@ -2,14 +2,13 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
-const GameItem = ({ id, thumbnail, short_description }) => {
+const GameItem = ({ name, id }) => {
     return (
         <div
             style={{
                 display: "flex",
-                justifyContent: "space-around",
                 width: "400px",
-                flexWrap: 'nowrap'
+                flexFlow: 'column wrap'
             }}
         >
             <Card
@@ -17,11 +16,11 @@ const GameItem = ({ id, thumbnail, short_description }) => {
                     width: "20rem",
                 }}
             >
-                <Card.Img variant="top" src={thumbnail} />
+                <Card.Img variant="top" src="" />
                 <Card.Body>
                     <Card.Title></Card.Title>
-                    <Card.Text>{short_description}</Card.Text>
-                    <Button as={Link} to={`/details/${id}`} variant="variant">
+                    <Card.Text>{name}</Card.Text>
+                    <Button as={Link} to={`/details/${id}`} variant="primary">
                         Details
                     </Button>
                 </Card.Body>
