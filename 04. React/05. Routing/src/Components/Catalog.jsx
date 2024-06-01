@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { X_RapidAPI_Key, X_RapidAPI_Host } from "./authTokens/authToken";
+import { X_RapidAPI_Key, X_RapidAPI_Host } from "../authTokens/authToken";
 import GameItem from "./GameItem";
 
 const base_url = `https://free-to-play-games-database.p.rapidapi.com/api/filter?tag=3d.mmorpg.fantasy.pvp&platform=pc`;
