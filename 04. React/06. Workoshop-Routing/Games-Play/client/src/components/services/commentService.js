@@ -18,7 +18,7 @@ export const createComment = async (gameId, text) => {
 export const getAll = async (gameId) => {
     const response = await fetch(base_url)
     const comments = await response.json()
-    const filteredComments = Object.values(comments).filter(comment => comment.gameId === gameId)
     
-    return filteredComments;
+    //here the problem is over-fetching!
+    return Object.values(comments).filter(comment => comment.gameId === gameId);
 }
