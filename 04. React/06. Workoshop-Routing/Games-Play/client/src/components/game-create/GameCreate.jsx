@@ -77,12 +77,15 @@ const GameCreate = () => {
                     />
 
                     <label htmlFor="summary">Summary:</label>
-                    <textarea name="summary" id="summary"></textarea>
+                    <textarea
+                        ref={summaryInput}
+                        name="summary"
+                        id="summary"
+                    ></textarea>
                     <input
                         className="btn submit"
                         type="submit"
                         value="Create Game"
-                        ref={summaryInput}
                     />
                 </div>
             </form>

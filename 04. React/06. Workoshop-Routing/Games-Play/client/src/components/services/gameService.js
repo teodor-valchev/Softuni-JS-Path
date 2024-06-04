@@ -1,27 +1,20 @@
+import * as request from "../../lib/request.js";
 const base_url = "http://localhost:3030/jsonstore/games";
 
 export const createGame = async (gameData) => {
-    const game = await fetch(base_url, {
-        method: 'POST',
-        body: JSON.stringify(gameData)
-    })
+    const result = await request.post(base_url, gameData);
 
-    if (!game.ok) {
-        throw new Error('Invalid data!')
-    }
-    return game
-}
+    return result;
+};
 
 export const getAll = async () => {
-    const response = await fetch(base_url)
-    const games = await response.json()
+    const result = await request.get(base_url);
 
-    return Object.values(games)
-}
+    return Object.values(result);
+};
 
 export const getOne = async (id) => {
-    const response = await fetch(base_url + `/${id}`)
-    const game = await response.json();
+    const game = await request.get(`${base_url}/${id}`);
 
-    return game
-}
+    return game;
+};
