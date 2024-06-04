@@ -11,3 +11,10 @@ export const createGame = async (gameData) => {
     }
     return game
 }
+
+export const getAll = async () => {
+    const response = await fetch(base_url)
+    const games = await response.json()
+
+    return Object.values(games)
+}
