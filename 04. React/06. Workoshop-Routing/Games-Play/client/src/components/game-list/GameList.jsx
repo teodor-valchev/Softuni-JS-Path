@@ -8,11 +8,10 @@ const GameList = () => {
     useEffect(() => {
         gameService.getAll().then((games) => setGames(games));
     }, []);
-    console.log(games);
+
     return (
         <section id="catalog-page">
             <h1>All Games</h1>
-            {/* <!-- Display div: with information about every game (if any) --> */}
 
             {games.length ? (
                 games.map((game) => <GameListItem key={game._id} {...game} />)

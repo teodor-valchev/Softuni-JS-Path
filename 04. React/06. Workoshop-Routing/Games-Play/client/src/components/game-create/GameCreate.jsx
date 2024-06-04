@@ -2,7 +2,7 @@ import { useRef } from "react";
 import * as gameService from '../services/gameService.js'
 import { useNavigate } from "react-router-dom";
 
-const Create = () => {
+const GameCreate = () => {
     const navigate = useNavigate();
     const titleInput = useRef('')
     const categoryInput = useRef(""); 
@@ -90,4 +90,4 @@ const Create = () => {
     );
 };
 
-export default Create
+export default GameCreate;

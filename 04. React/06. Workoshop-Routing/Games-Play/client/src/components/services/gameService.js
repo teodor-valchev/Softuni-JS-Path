@@ -18,3 +18,10 @@ export const getAll = async () => {
 
     return Object.values(games)
 }
+
+export const getOne = async (id) => {
+    const response = await fetch(base_url + `/${id}`)
+    const game = await response.json();
+
+    return game
+}
