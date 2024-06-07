@@ -8,6 +8,16 @@ const buildOptions = (data) => {
         };
     }
 
+    const token = localStorage.getItem('accessToken')
+
+    if (token) {
+        
+        options.headers = {
+            ...options.headers,
+            'X-Authorization': token
+        }
+    }
+
     return options;
 };
 
@@ -20,6 +30,10 @@ const request = async (method, url, data) => {
 
         if (!response.ok) {
             throw new Error("Invalid data!");
+        }
+
+        if (response.status === 204) {
+            return response.status
         }
 
         const result = await response.json();

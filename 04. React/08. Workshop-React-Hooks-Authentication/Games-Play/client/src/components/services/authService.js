@@ -17,3 +17,11 @@ export const register = (email, password) => {
 
     return result;
 };
+
+export const logout = async () => {
+
+    const result = await request.get(`${base_url}/logout`);
+    return result
+};
+
+

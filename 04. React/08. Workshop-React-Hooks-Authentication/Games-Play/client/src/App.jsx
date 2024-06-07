@@ -10,6 +10,7 @@ import Header from "./components/header/Header";
 import Home from "./components/home/Home";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
+import Logout from "./components/logout/Logout";
 import GameList from "./components/game-list/GameList";
 import GameCreate from "./components/game-create/GameCreate";
 import GameDetails from "./components/game-details/GameDetails";
@@ -18,11 +19,13 @@ import "./App.css";
 
 function App() {
     const [auth, setAuth] = useState({});
-    useContext(AuthContext);
     const navigate = useNavigate();
+    useContext(AuthContext);
 
     const loginSubmitHandler = async (values) => {
-        const user =  await authService.login(values);
+        const user = await authService.login(values);
+        
+        localStorage.setItem('accessToken',user.accessToken)
 
         setAuth(user);
         navigate(Path.Home);
@@ -30,6 +33,8 @@ function App() {
 
     const registerSubmitHandler = async (values) => {
         const user = await authService.register(values.email,values.password);
+        
+        localStorage.setItem("accessToken", user.accessToken);
         
         setAuth(user)
         navigate(Path.Home)
@@ -47,14 +52,21 @@ function App() {
                 <Header />
                 <Routes>
                     <Route path={Path.Home} element={<Home />}></Route>
-                    <Route path={Path["All-Games"]} element={<GameList />}></Route>
-                    <Route path={Path["Create-Game"]} element={<GameCreate />}></Route>
+                    <Route
+                        path={Path["All-Games"]}
+                        element={<GameList />}
+                    ></Route>
+                    <Route
+                        path={Path["Create-Game"]}
+                        element={<GameCreate />}
+                    ></Route>
                     <Route
                         path={Path.Details}
                         element={<GameDetails />}
                     ></Route>
                     <Route path={Path.Login} element={<Login />}></Route>
                     <Route path={Path.Register} element={<Register />}></Route>
+                    <Route path={Path.Logout} element={<Logout />}></Route>
                 </Routes>
             </AuthContext.Provider>
         </div>
