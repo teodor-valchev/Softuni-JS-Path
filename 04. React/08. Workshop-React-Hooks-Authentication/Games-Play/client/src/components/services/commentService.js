@@ -1,5 +1,5 @@
 import * as request from "../../lib/request.js";
-const base_url = "http://localhost:3030/jsonstore/comments";
+const base_url = "http://localhost:3030/data/comments";
 
 export const createComment = async (gameId, text) => {
     const data = {
@@ -13,10 +13,12 @@ export const createComment = async (gameId, text) => {
 };
 
 export const getAll = async (gameId) => {
-    const comments = await request.get(base_url);
-
-    //here the problem is over-fetching!
-    return Object.values(comments).filter(
-        (comment) => comment.gameId === gameId
-    );
+    const query = new URLSearchParams({
+        where: `gameId="${gameId}"`,
+        });
+        
+    const comments = await request.get(`${base_url}?${query}`);
+    
+    return comments
+    
 };

@@ -19,6 +19,7 @@ const GameDetails = () => {
         let comment = data.get("comment");
 
         const newComment = await commentService.createComment(gameId, comment);
+        
         setComments((state) => [...state, newComment]);
         e.target.comment.value = ''
     };
