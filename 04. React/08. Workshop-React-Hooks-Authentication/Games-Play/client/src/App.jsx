@@ -4,6 +4,8 @@ import { useContext, useState } from "react";
 import AuthContext from "./context/authContext";
 import * as authService  from "./components/services/authService";
 
+import Path from "./paths";
+
 import Header from "./components/header/Header";
 import Home from "./components/home/Home";
 import Login from "./components/login/Login";
@@ -13,7 +15,6 @@ import GameCreate from "./components/game-create/GameCreate";
 import GameDetails from "./components/game-details/GameDetails";
 
 import "./App.css";
-import Path from "./paths";
 
 function App() {
     const [auth, setAuth] = useState({});
@@ -21,14 +22,22 @@ function App() {
     const navigate = useNavigate();
 
     const loginSubmitHandler = async (values) => {
-        const user = await authService.login(values);
+        const user =  await authService.login(values);
 
         setAuth(user);
         navigate(Path.Home);
     };
 
+    const registerSubmitHandler = async (values) => {
+        const user = await authService.register(values.email,values.password);
+        
+        setAuth(user)
+        navigate(Path.Home)
+    }
+
     const values = {
         loginSubmitHandler,
+        registerSubmitHandler,
         isAuth: !!auth.accessToken,
     };
 
