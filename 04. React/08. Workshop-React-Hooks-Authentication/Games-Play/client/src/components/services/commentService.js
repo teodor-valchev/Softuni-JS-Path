@@ -15,10 +15,10 @@ export const createComment = async (gameId, text) => {
 export const getAll = async (gameId) => {
     const query = new URLSearchParams({
         where: `gameId="${gameId}"`,
+        load:`owner=_ownerId:users`
         });
         
     const comments = await request.get(`${base_url}?${query}`);
     
     return comments
-    
 };
