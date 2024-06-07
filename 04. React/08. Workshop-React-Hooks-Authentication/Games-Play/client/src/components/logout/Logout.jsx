@@ -1,14 +1,16 @@
-import { useEffect } from "react"
+import { useContext, useEffect } from "react";
 
 import * as authService from "../services/authService";
+import AuthContext from "../../context/authContext";
 
 const Logout = () => {
-    return (
-        useEffect(() => {
-            authService.logout()
-                .then(data => localStorage.removeItem('accessToken'));
-        })
-    )
-}
+    const { logoutHandler } = useContext(AuthContext);
+    return useEffect(() => {
+        authService.logout().then((data) => {
+            localStorage.clear();
+            logoutHandler();
+        });
+    });
+};
 
-export default Logout
+export default Logout;

@@ -18,7 +18,11 @@ import GameDetails from "./components/game-details/GameDetails";
 import "./App.css";
 
 function App() {
-    const [auth, setAuth] = useState({});
+    const [auth, setAuth] = useState(() => {
+        localStorage.removeItem('accessToken')
+        return {}
+    });
+
     const navigate = useNavigate();
     useContext(AuthContext);
 
@@ -40,9 +44,15 @@ function App() {
         navigate(Path.Home)
     }
 
+    const logoutHandler = () => {
+        setAuth({})
+        navigate(Path.Home)
+    }
+
     const values = {
         loginSubmitHandler,
         registerSubmitHandler,
+        logoutHandler,
         isAuth: !!auth.accessToken,
     };
 
