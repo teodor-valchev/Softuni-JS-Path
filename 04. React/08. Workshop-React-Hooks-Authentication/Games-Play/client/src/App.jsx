@@ -13,6 +13,7 @@ import GameCreate from "./components/game-create/GameCreate";
 import GameDetails from "./components/game-details/GameDetails";
 
 import "./App.css";
+import Path from "./paths";
 
 function App() {
     const [auth, setAuth] = useState({});
@@ -23,8 +24,7 @@ function App() {
         const user = await authService.login(values);
 
         setAuth(user);
-        navigate('/');
-        
+        navigate(Path.Home);
     };
 
     const values = {
@@ -37,15 +37,15 @@ function App() {
             <AuthContext.Provider value={values}>
                 <Header />
                 <Routes>
-                    <Route path="/" element={<Home />}></Route>
-                    <Route path="/all-games" element={<GameList />}></Route>
-                    <Route path="/create" element={<GameCreate />}></Route>
+                    <Route path={Path.Home} element={<Home />}></Route>
+                    <Route path={Path["All-Games"]} element={<GameList />}></Route>
+                    <Route path={Path["Create-Game"]} element={<GameCreate />}></Route>
                     <Route
-                        path="/details/:gameId"
+                        path={Path.Details}
                         element={<GameDetails />}
                     ></Route>
-                    <Route path="/login" element={<Login />}></Route>
-                    <Route path="/register" element={<Register />}></Route>
+                    <Route path={Path.Login} element={<Login />}></Route>
+                    <Route path={Path.Register} element={<Register />}></Route>
                 </Routes>
             </AuthContext.Provider>
         </div>
