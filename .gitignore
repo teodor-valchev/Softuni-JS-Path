@@ -1,4 +1,5 @@
 node_modules
+.vscode
 *.docx
 03. JS-Back End/01. Intro to Node.js/.vscode/launch.json
 03. JS-Back End/01. Intro to Node.js/03.Cat-Shelter-Intro-Guide-follow/data/breeds.json
