@@ -26,6 +26,7 @@ The JavaScript Path at Softuni covers a wide range of topics, including:
 - JavaScript
 - Node.js
 - HTML/CSS
+- React
 - Various npm packages for testing and development
 
 ## 🛠️ Setup
