@@ -1,9 +1,6 @@
-import { useNavigate, Route, Routes} from "react-router-dom";
-import { useContext, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 
-import AuthContext from "./context/authContext";
-import * as authService  from "./components/services/authService";
-
+import { AuthProvider } from "./context/authContext";
 import Path from "./paths";
 
 import Header from "./components/header/Header";
@@ -18,47 +15,9 @@ import GameDetails from "./components/game-details/GameDetails";
 import "./App.css";
 
 function App() {
-    const [auth, setAuth] = useState(() => {
-        localStorage.removeItem('accessToken')
-        return {}
-    });
-
-    const navigate = useNavigate();
-    useContext(AuthContext);
-
-    const loginSubmitHandler = async (values) => {
-        const user = await authService.login(values);
-        
-        localStorage.setItem('accessToken',user.accessToken)
-
-        setAuth(user);
-        navigate(Path.Home);
-    };
-
-    const registerSubmitHandler = async (values) => {
-        const user = await authService.register(values.email,values.password);
-        
-        localStorage.setItem("accessToken", user.accessToken);
-        
-        setAuth(user)
-        navigate(Path.Home)
-    }
-
-    const logoutHandler = () => {
-        setAuth({})
-        navigate(Path.Home)
-    }
-
-    const values = {
-        loginSubmitHandler,
-        registerSubmitHandler,
-        logoutHandler,
-        isAuth: !!auth.accessToken,
-    };
-
     return (
         <div id="box">
-            <AuthContext.Provider value={values}>
+            <AuthProvider>
                 <Header />
                 <Routes>
                     <Route path={Path.Home} element={<Home />}></Route>
@@ -78,7 +37,7 @@ function App() {
                     <Route path={Path.Register} element={<Register />}></Route>
                     <Route path={Path.Logout} element={<Logout />}></Route>
                 </Routes>
-            </AuthContext.Provider>
+            </AuthProvider>
         </div>
     );
 }
