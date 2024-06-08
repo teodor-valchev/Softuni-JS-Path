@@ -18,3 +18,9 @@ export const getOne = async (id) => {
 
     return game;
 };
+
+export const deleteGame = async (id) => {
+    const game = await request.remove(`${base_url}/${id}`)
+
+    return game
+}

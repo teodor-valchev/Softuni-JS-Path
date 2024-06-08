@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import AuthContext from "../../context/authContext";
 import * as gameService from "../services/gameService";
 import * as commentService from "../services/commentService";
 import { useForm } from "../../hooks/useForm";
+import Path from "../../paths";
 
 const GameDetails = () => {
     const { userId } = useContext(AuthContext)
@@ -61,9 +62,9 @@ const GameDetails = () => {
                         <a href="#" className="button">
                             Edit
                         </a>
-                        <a href="#" className="button">
+                        <Link to={Path.Delete.replace(':gameId',gameId)} className="button">
                             Delete
-                        </a>
+                        </Link>
                     </div>
                 )}
             </div>

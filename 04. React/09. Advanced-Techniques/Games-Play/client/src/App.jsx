@@ -10,6 +10,7 @@ import Register from "./components/register/Register";
 import Logout from "./components/logout/Logout";
 import GameList from "./components/game-list/GameList";
 import GameCreate from "./components/game-create/GameCreate";
+import GameDelete from "./components/game-delete/GameDelete";
 import GameDetails from "./components/game-details/GameDetails";
 
 import "./App.css";
@@ -33,6 +34,7 @@ function App() {
                         path={Path.Details}
                         element={<GameDetails />}
                     ></Route>
+                    <Route path={Path.Delete} element={<GameDelete />}></Route>
                     <Route path={Path.Login} element={<Login />}></Route>
                     <Route path={Path.Register} element={<Register />}></Route>
                     <Route path={Path.Logout} element={<Logout />}></Route>
