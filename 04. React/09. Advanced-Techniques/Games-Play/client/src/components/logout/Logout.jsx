@@ -7,7 +7,6 @@ const Logout = () => {
     const { logoutHandler } = useContext(AuthContext);
     return useEffect(() => {
         authService.logout().then((data) => {
-            localStorage.clear();
             logoutHandler();
         });
     });
