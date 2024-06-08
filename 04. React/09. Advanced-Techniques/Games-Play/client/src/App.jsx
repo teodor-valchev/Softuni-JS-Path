@@ -12,6 +12,7 @@ import GameList from "./components/game-list/GameList";
 import GameCreate from "./components/game-create/GameCreate";
 import GameDelete from "./components/game-delete/GameDelete";
 import GameDetails from "./components/game-details/GameDetails";
+import GameEdit from "./components/game-edit/GameEdit";
 
 import "./App.css";
 
@@ -35,6 +36,7 @@ function App() {
                         element={<GameDetails />}
                     ></Route>
                     <Route path={Path.Delete} element={<GameDelete />}></Route>
+                    <Route path={Path.Edit} element={<GameEdit />}></Route>
                     <Route path={Path.Login} element={<Login />}></Route>
                     <Route path={Path.Register} element={<Register />}></Route>
                     <Route path={Path.Logout} element={<Logout />}></Route>

@@ -6,7 +6,8 @@ const Path = {
     Register: "/register",
     Details: "/details/:gameId",
     Logout: '/logout',
-    Delete: '/delete/:gameId'
+    Delete: '/delete/:gameId',
+    Edit: '/edit/:gameId'
 };
 
 export default Path

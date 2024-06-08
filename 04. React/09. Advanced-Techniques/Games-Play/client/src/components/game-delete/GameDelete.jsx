@@ -14,7 +14,7 @@ const GameDelete = () => {
                     alert("Game successfully deleted");
                     navigate(Path.Home)
                 })
-        })
+        },[gameId])
     )
 };
 

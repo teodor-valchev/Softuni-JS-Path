@@ -24,3 +24,9 @@ export const deleteGame = async (id) => {
 
     return game
 }
+
+export const editGame = async (gameId,gameData) => {
+    const game = await request.patch(`${base_url}/${gameId}`,gameData);
+
+    return game;
+};

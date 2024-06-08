@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import AuthContext from "../../context/authContext";
@@ -24,9 +24,10 @@ const GameDetails = () => {
         setComments((state) => [...state, newComment]);
     };
 
-    const { values, onChange, onFormSubmit } = useForm(commentHandler, {
-        comment: "",
-    });
+    const initialValues = useMemo(() => ({
+        comment: ''
+    }),[])
+    const { values, onChange, onFormSubmit } = useForm(commentHandler,initialValues);
 
     return (
         <section id="game-details">
@@ -59,10 +60,10 @@ const GameDetails = () => {
                 </div>
                 {userId === game._ownerId && (
                     <div className="buttons">
-                        <a href="#" className="button">
+                        <Link to={Path.Edit.replace(':gameId', gameId)} className="button">
                             Edit
-                        </a>
-                        <Link to={Path.Delete.replace(':gameId',gameId)} className="button">
+                        </Link>
+                        <Link to={Path.Delete.replace(':gameId', gameId)} className="button">
                             Delete
                         </Link>
                     </div>
