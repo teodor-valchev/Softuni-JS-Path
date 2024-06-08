@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
+import AuthContext from "../../context/authContext";
 import * as gameService from "../services/gameService";
 import * as commentService from "../services/commentService";
-import AuthContext from "../../context/authContext";
+import { useForm } from "../../hooks/useForm";
 
 const GameDetails = () => {
     const { userId } = useContext(AuthContext)
@@ -15,16 +17,15 @@ const GameDetails = () => {
         commentService.getAll(gameId).then((data) => setComments(data));
     }, [gameId]);
 
-    const commentHandler = async (e) => {
-        e.preventDefault();
-        const data = new FormData(e.target);
-        let comment = data.get("comment");
-
-        const newComment = await commentService.createComment(gameId, comment);
+    const commentHandler = async (values) => {
+        const newComment = await commentService.createComment(gameId, values.comment);
         
         setComments((state) => [...state, newComment]);
-        e.target.comment.value = ''
     };
+
+    const { values, onChange, onFormSubmit } = useForm(commentHandler, {
+        comment: "",
+    });
 
     return (
         <section id="game-details">
@@ -71,10 +72,12 @@ const GameDetails = () => {
             <!-- Add Comment ( Only for logged-in users, which is not creators of the current game ) --> */}
             <article className="create-comment">
                 <label>Add new comment:</label>
-                <form onSubmit={commentHandler} className="form">
+                <form onSubmit={onFormSubmit} className="form">
                     <textarea
                         name="comment"
                         placeholder="Comment......"
+                        onChange={onChange}
+                        value={values.comment}
                     ></textarea>
                     <input
                         className="btn submit"
