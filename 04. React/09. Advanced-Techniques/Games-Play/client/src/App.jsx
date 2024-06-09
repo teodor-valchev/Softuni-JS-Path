@@ -13,6 +13,7 @@ import GameCreate from "./components/game-create/GameCreate";
 import GameDelete from "./components/game-delete/GameDelete";
 import GameDetails from "./components/game-details/GameDetails";
 import GameEdit from "./components/game-edit/GameEdit";
+import AuthGuard from "./guards/AuthGuard";
 
 import "./App.css";
 
@@ -27,19 +28,17 @@ function App() {
                         path={Path["All-Games"]}
                         element={<GameList />}
                     ></Route>
-                    <Route
-                        path={Path["Create-Game"]}
-                        element={<GameCreate />}
-                    ></Route>
-                    <Route
-                        path={Path.Details}
-                        element={<GameDetails />}
-                    ></Route>
-                    <Route path={Path.Delete} element={<GameDelete />}></Route>
-                    <Route path={Path.Edit} element={<GameEdit />}></Route>
                     <Route path={Path.Login} element={<Login />}></Route>
                     <Route path={Path.Register} element={<Register />}></Route>
                     <Route path={Path.Logout} element={<Logout />}></Route>
+
+                    <Route element={<AuthGuard />}>
+                        <Route path={Path["Create-Game"]} element={<GameCreate />}></Route>
+                        <Route path={Path.Delete} element={<GameDelete />}></Route>
+                        <Route path={Path.Edit} element={<GameEdit />}></Route>
+                        <Route path={Path.Details} element={<GameDetails />}
+                    ></Route>
+                    </Route>
                 </Routes>
             </AuthProvider>
         </div>
