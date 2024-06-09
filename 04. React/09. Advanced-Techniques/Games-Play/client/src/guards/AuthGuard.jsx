@@ -8,7 +8,7 @@ const AuthGuard = () => {
     const { isAuth } = useContext(AuthContext)
     
     if (!isAuth) {
-        return Navigate({to:Path.Login})
+        return Navigate({to: Path.Login})
     }
 
     return <Outlet />

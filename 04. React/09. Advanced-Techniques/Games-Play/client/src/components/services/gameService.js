@@ -20,13 +20,24 @@ export const getOne = async (id) => {
 };
 
 export const deleteGame = async (id) => {
-    const game = await request.remove(`${base_url}/${id}`)
-
-    return game
-}
-
-export const editGame = async (gameId,gameData) => {
-    const game = await request.patch(`${base_url}/${gameId}`,gameData);
+    const game = await request.remove(`${base_url}/${id}`);
 
     return game;
+};
+
+export const editGame = async (gameId, gameData) => {
+    const game = await request.patch(`${base_url}/${gameId}`, gameData);
+
+    return game;
+};
+
+export const latestGames = async () => {
+    const query = new URLSearchParams({
+        offset: 0,
+        pageSize: 3,
+    });
+
+    const games = await request.get(`${base_url}?${query}`);
+
+    return games;
 };
