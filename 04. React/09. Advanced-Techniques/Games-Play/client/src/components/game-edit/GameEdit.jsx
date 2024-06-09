@@ -2,34 +2,41 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 
 import * as gameService from "../services/gameService";
-import { useForm } from "../../hooks/useForm";
+
+const initialValues = {
+    title: "",
+    category: "",
+    maxLevel: "",
+    image: "",
+    summary: "",
+};
 
 const GameEdit = () => {
     const { gameId } = useParams("gameId");
     const navigate = useNavigate()
-    const [game, setGame] = useState({
-        title: "",
-        category: "",
-        maxLevel: "",
-        image: "",
-        summary: "",
-    });
+    const [game, setGame] = useState(initialValues);
 
     useEffect(() => {
         gameService.getOne(gameId)
         .then(result => setGame(result))
     }, [gameId])
 
-    const editSubmitHandler = async(values) => {
+    const onChange = (e) => {
+        const { name, value } = e.target;
+        setGame((state) => ({ ...state, [name]: value }));
+    };
+
+    const editSubmitHandler = async (e) => {
+        e.preventDefault()
+        const values = Object.fromEntries(new FormData(e.target))
+
         await gameService.editGame(gameId, values)
         navigate(`/details/${gameId}`)
     }
 
-    const { values, onChange, onFormSubmit } = useForm(editSubmitHandler, game);
-
     return (
         <section id="edit-page" className="auth">
-            <form id="edit" onSubmit={onFormSubmit}>
+            <form id="edit" onSubmit={editSubmitHandler}>
                 <div className="container">
                     <h1>Edit Game</h1>
                     <label htmlFor="leg-title">Legendary title:</label>
@@ -37,7 +44,7 @@ const GameEdit = () => {
                         type="text"
                         id="title"
                         name="title"
-                        value={values.title}
+                        value={game.title}
                         onChange={onChange}
                     />
 
@@ -46,7 +53,7 @@ const GameEdit = () => {
                         type="text"
                         id="category"
                         name="category"
-                        value={values.category}
+                        value={game.category}
                         onChange={onChange}
                     />
 
@@ -56,7 +63,7 @@ const GameEdit = () => {
                         id="maxLevel"
                         name="maxLevel"
                         min="1"
-                        value={values.maxLevel}
+                        value={game.maxLevel}
                         onChange={onChange}
                     />
 
@@ -65,7 +72,7 @@ const GameEdit = () => {
                         type="text"
                         id="imageUrl"
                         name="image"
-                        value={values.image}
+                        value={game.image}
                         onChange={onChange}
                     />
 
@@ -73,7 +80,7 @@ const GameEdit = () => {
                     <textarea
                         name="summary"
                         id="summary"
-                        value={values.summary}
+                        value={game.summary}
                         onChange={onChange}
                     ></textarea>
                     <input
